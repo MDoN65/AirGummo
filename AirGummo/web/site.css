@@ -1,0 +1,26 @@
+body, html {
+    height: 100%;
+}
+.bg { 
+    /* The image used */
+    /* background-image: url("https://mdbootstrap.com/img/Photos/Horizontal/Nature/full page/img(11).jpg"); */
+    background-image: url("images/bg.jpg");
+
+    /* Half height */
+    height: 50%;
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.smallIcon {
+    width: 120px;
+    height: 120px;
+}
+.center {
+    text-align: center;
+}
+.vertCenter {
+    display: block;
+}

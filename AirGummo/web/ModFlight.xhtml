@@ -5,10 +5,47 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
+        <link href="site.css" rel="stylesheet" type="text/css"></link>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <title>Air Gummo - Modify Flight</title>
     </h:head>
     <h:body>
         <ui:include src="includes/header.xhtml" />
+        <div class="bg">
+            <br /><br /><br /><br /><br /><br />
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-4 col-xs-12 center">
+                        <div class="card">
+                            <img class="card-img-top smallIcon" src="images/iconAdd.png" alt="Add Flight"></img>
+                            <div class="card-body">
+                                <a href="#" class="btn btn-primary" style="margin-top: 4%">Add Flight</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 col-xs-12 center">
+                        <div class="card">
+                            <img class="card-img-top smallIcon" src="images/iconMod.png" alt="Modify Flight"></img>
+                            <div class="card-body">
+                                <a href="#" class="btn btn-primary" style="margin-top: 4%">Modify Flight</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 col-xs-12 center">
+                        <div class="card">
+                        <img class="card-img-top smallIcon" src="images/iconDelete.png" alt="Delete Flight"></img>
+                            <div class="card-body">
+                                <a href="#" class="btn btn-primary" style="margin-top: 4%">Delete Flight</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="content">
+            
+        </div>
     </h:body>
 </html>
 
