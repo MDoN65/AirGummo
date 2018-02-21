@@ -16,29 +16,38 @@
             <br /><br /><br /><br /><br /><br />
             <div class="container">
                 <div class="row">
-                    <div class="col-sm-4 col-xs-12 center">
+                    <div class="col-sm-4 hidden-xs center">
                         <div class="card">
                             <img class="card-img-top smallIcon" src="images/iconAdd.png" alt="Add Flight"></img>
                             <div class="card-body">
-                                <a href="#" class="btn btn-primary" style="margin-top: 4%">Add Flight</a>
+                                <h:button id="btnAdd" class="btn btn-primary" value="Add Flight" style="margin-top: 4%"></h:button>
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-4 col-xs-12 center">
+                    <div class="col-xs-12 hidden-sm hidden-md hidden-lg hidden-xl center">
+                        <h:button id="btnAdd" class="btn btn-primary" value="Add Flight" style="margin-top: 4%"></h:button>
+                    </div>
+                    <div class="col-sm-4 hidden-xs center">
                         <div class="card">
                             <img class="card-img-top smallIcon" src="images/iconMod.png" alt="Modify Flight"></img>
                             <div class="card-body">
-                                <a href="#" class="btn btn-primary" style="margin-top: 4%">Modify Flight</a>
+                                <h:button id="btnMod" class="btn btn-primary" value="Modify Flight" style="margin-top: 4%"></h:button>
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-4 col-xs-12 center">
+                    <div class="col-xs-12 hidden-sm hidden-md hidden-lg hidden-xl center">
+                        <h:button id="btnMod" class="btn btn-primary" value="Modify Flight" style="margin-top: 4%"></h:button>
+                    </div>
+                    <div class="col-sm-4 hidden-xs center">
                         <div class="card">
                         <img class="card-img-top smallIcon" src="images/iconDelete.png" alt="Delete Flight"></img>
                             <div class="card-body">
-                                <a href="#" class="btn btn-primary" style="margin-top: 4%">Delete Flight</a>
+                                <h:button id="btnDel" class="btn btn-primary" value="Delete Flight" style="margin-top: 4%"></h:button>
                             </div>
                         </div>
+                    </div>
+                    <div class="col-xs-12 hidden-sm hidden-md hidden-lg hidden-xl center">
+                        <h:button id="btnDel" class="btn btn-primary" value="Delete Flight" style="margin-top: 4%"></h:button>
                     </div>
                 </div>
             </div>
