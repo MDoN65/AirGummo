@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
         <link href="site.css" rel="stylesheet" type="text/css"></link>
@@ -26,7 +27,7 @@
                         </div>
                     </div>
                     <div class="col-xs-12 hidden-sm hidden-md hidden-lg hidden-xl center">
-                        <h:button id="btnAdd" class="btn btn-primary" value="Add Flight" style="margin-top: 4%"></h:button>
+                        <h:button id="btnAdd1" class="btn btn-primary" value="Add Flight" style="margin-top: 4%"></h:button>
                     </div>
                     <div class="col-sm-4 hidden-xs center">
                         <div class="card">
@@ -37,7 +38,7 @@
                         </div>
                     </div>
                     <div class="col-xs-12 hidden-sm hidden-md hidden-lg hidden-xl center">
-                        <h:button id="btnMod" class="btn btn-primary" value="Modify Flight" style="margin-top: 4%"></h:button>
+                        <h:button id="btnMod1" class="btn btn-primary" value="Modify Flight" style="margin-top: 4%"></h:button>
                     </div>
                     <div class="col-sm-4 hidden-xs center">
                         <div class="card">
@@ -48,14 +49,36 @@
                         </div>
                     </div>
                     <div class="col-xs-12 hidden-sm hidden-md hidden-lg hidden-xl center">
-                        <h:button id="btnDel" class="btn btn-primary" value="Delete Flight" style="margin-top: 4%"></h:button>
+                        <h:button id="btnDel1" class="btn btn-primary" value="Delete Flight" style="margin-top: 4%"></h:button>
                     </div>
                 </div>
             </div>
         </div>
         <div id="content">
-            
+            <h:form>
+                <p:panel id="projectLabel" header="Add Flight" style="margin-bottom:10px;">
+                <p:messages id="messages" />
+
+                <h:panelGrid columns="2">
+
+                    <h:outputLabel for="flightId" value="Flight Number:" class="ui-g-6" />
+                    <p:inputText id="flightId" value="#{addFlight.flightId}" label="flightId">
+                        <f:validateLength minimum="2" />
+                    </p:inputText>
+                    <p:message for="flightId" />
+                    <h:outputText value="" />
+
+                    <h:outputLabel for="airline" value="Airline Name:" />
+                    <p:inputText id="airline" value="#{addFlight.airline}"  label="airline"/>
+                    <p:message for="airline" />
+                    <h:outputText value="" />
+
+                    <center>
+                        <p:commandButton ajax="false" value="Add Flight" icon="ui-icon-disk" action="#{saveData.save}" />
+                    </center>
+                </h:panelGrid>
+            </p:panel>
+            </h:form>
         </div>
     </h:body>
 </html>
-
