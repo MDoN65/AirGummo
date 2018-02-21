@@ -5,6 +5,7 @@ body, html {
     /* The image used */
     /* background-image: url("https://mdbootstrap.com/img/Photos/Horizontal/Nature/full page/img(11).jpg"); */
     background-image: url("images/beachsm.jpg");
+    
 
     /* Half height */
     height: 50%;
@@ -37,4 +38,10 @@ body, html {
     color: #fff;
     text-shadow: #000 0px 0px 10px;
     -webkit-font-smoothing: antialiased;  
+}
+#content {
+    width: 80%;
+    margin: auto;
+    background-color: white;
+    height: 100%;
 }
