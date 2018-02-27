@@ -86,15 +86,15 @@
                     </div>
                     <div class="col-sm-6 col-xs-12 form-group">
                     <h:outputLabel for="departTime" value="Departure Time" />
-                    <p:calendar id="departTime" value="#{flight.departureTime}" label="departTime" pattern="MM/dd/yyyy HH:mm" mode="inline">
-                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm" />
-                    </p:calendar>
+                    <br />
+                    <p:calendar id="departTime" value="#{flight.departureTime}" label="departTime" pattern="MM/dd/yyyy HH:mm"/>
                     <p:message for="departTime" />
                     <h:outputText value="" />
                     </div>
                     <div class="col-sm-6 col-xs-12 form-group">
                     <h:outputLabel for="arrivalTime" value="Arrival Time" />
-                    <p:calendar id="arrivalTime" value="#{flight.arrivalTime}" label="arrivalTime" pattern="MM/dd/yyyy HH:mm" mode="inline"/>
+                    <br />
+                    <p:calendar id="arrivalTime" value="#{flight.arrivalTime}" label="arrivalTime" pattern="MM/dd/yyyy HH:mm"/>
                     <p:message for="arrivalTime" />
                     <h:outputText value="" />
                     </div>
@@ -123,12 +123,12 @@
                     <h:outputLabel for="flightStatus" value="Flight Status" />
                     <br />
                     <p:selectOneMenu value="#{flight.flightStatus}" label="flightStatus">
-                        <f:selectItem itemValue="select" itemLabel="---Select Flight Status---"></f:selectItem>
-                        <f:selectItem itemValue="open" itemLabel="Open"></f:selectItem>
-                        <f:selectItem itemValue="inTransit" itemLabel="In Transit"></f:selectItem>
-                        <f:selectItem itemValue="delayed" itemLabel="Delayed"></f:selectItem>
-                        <f:selectItem itemValue="completed" itemLabel="Completed"></f:selectItem>
-                        <f:selectItem itemValue="cancelled" itemLabel="Cancelled"></f:selectItem>
+                        <f:selectItem itemValue="0" itemLabel="---Select Flight Status---"></f:selectItem>
+                        <f:selectItem itemValue="1" itemLabel="Open"></f:selectItem>
+                        <f:selectItem itemValue="2" itemLabel="In Transit"></f:selectItem>
+                        <f:selectItem itemValue="3" itemLabel="Delayed"></f:selectItem>
+                        <f:selectItem itemValue="4" itemLabel="Completed"></f:selectItem>
+                        <f:selectItem itemValue="5" itemLabel="Cancelled"></f:selectItem>
                     </p:selectOneMenu>
                     </div>
                     <center>
