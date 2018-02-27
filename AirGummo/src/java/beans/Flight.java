@@ -5,6 +5,7 @@
  */
 package beans;
 
+import java.sql.Date;
 import java.time.LocalDateTime;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -27,8 +28,8 @@ public class Flight {
     private String airlineName;
     private String departureCode;
     private String arrivalCode;
-    private LocalDateTime departureTime;
-    private LocalDateTime arrivalTime;
+    private Date departureTime;
+    private Date arrivalTime;
     private Double totalFlyTime;
     private int flightStatus;
     private int seatAvailableFirst;
@@ -37,7 +38,7 @@ public class Flight {
     private double ticketPrice;
     private String reasonCanceled;
 
-    public Flight(String flightId, String airlineName, String departureCode, String arrivalCode, LocalDateTime departureTime, LocalDateTime arrivalTime, Double totalFlyTime, int flightStatus, int seatAvailableFirst, int seatAvailableBus, int seatAvailableEco, Double ticketPrice, String reasonCanceled) {
+    public Flight(String flightId, String airlineName, String departureCode, String arrivalCode, Date departureTime, Date arrivalTime, Double totalFlyTime, int flightStatus, int seatAvailableFirst, int seatAvailableBus, int seatAvailableEco, Double ticketPrice, String reasonCanceled) {
         this.flightId = flightId;
         this.airlineName = airlineName;
         this.departureCode = departureCode;
@@ -85,19 +86,19 @@ public class Flight {
         this.arrivalCode = arrivalCode;
     }
 
-    public LocalDateTime getDepartureTime() {
+    public Date getDepartureTime() {
         return departureTime;
     }
 
-    public void setDepartureTime(LocalDateTime departureTime) {
+    public void setDepartureTime(Date departureTime) {
         this.departureTime = departureTime;
     }
 
-    public LocalDateTime getArrivalTime() {
+    public Date getArrivalTime() {
         return arrivalTime;
     }
 
-    public void setArrivalTime(LocalDateTime arrivalTime) {
+    public void setArrivalTime(Date arrivalTime) {
         this.arrivalTime = arrivalTime;
     }
 
