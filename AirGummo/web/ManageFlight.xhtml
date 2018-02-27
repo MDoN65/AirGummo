@@ -86,7 +86,9 @@
                     </div>
                     <div class="col-sm-6 col-xs-12 form-group">
                     <h:outputLabel for="departTime" value="Departure Time" />
-                    <p:calendar id="departTime" value="#{FlightData.departureTime}" label="departTime" pattern="MM/dd/yyyy HH:mm" mode="inline"/>
+                    <p:calendar id="departTime" value="#{FlightData.departureTime}" label="departTime" pattern="MM/dd/yyyy HH:mm" mode="inline">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm" />
+                    </p:calendar>
                     <p:message for="departTime" />
                     <h:outputText value="" />
                     </div>
