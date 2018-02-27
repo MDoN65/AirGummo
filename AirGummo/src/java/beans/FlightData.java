@@ -17,11 +17,15 @@ import javax.annotation.Resource;
 import javax.sql.rowset.CachedRowSet;
 import java.time.format.DateTimeFormatter;
 import java.sql.Date;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 
 /**
  *
  * @author Ryguy
  */
+@ManagedBean
+@RequestScoped
 public class FlightData {
     private int flightId;
     private String airlineName;
@@ -40,6 +44,10 @@ public class FlightData {
     
     @Resource(name = "jdbc/_default")
     DataSource dataSource;
+    
+    public FlightData() {
+        
+    }
     
     private ArrayList<Flight> flights = new ArrayList();
     
