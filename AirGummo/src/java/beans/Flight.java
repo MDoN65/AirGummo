@@ -6,24 +6,24 @@
 package beans;
 
 import java.time.LocalDateTime;
-import javax.inject.Named;
-import javax.enterprise.context.Dependent;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 
 /**
  *
  * @author Mike
  */
-@Named(value = "flight")
-@Dependent
+@ManagedBean
+@RequestScoped
 public class Flight {
 
     /**
      * Creates a new instance of Flight
      */
     public Flight() {
-
+        
     }
-    private int flightId;
+    private String flightId;
     private String airlineName;
     private String departureCode;
     private String arrivalCode;
@@ -34,13 +34,30 @@ public class Flight {
     private int seatAvailableFirst;
     private int seatAvailableBus;
     private int seatAvailableEco;
+    private double ticketPrice;
     private String reasonCanceled;
 
-    public int getFlightId() {
+    public Flight(String flightId, String airlineName, String departureCode, String arrivalCode, LocalDateTime departureTime, LocalDateTime arrivalTime, Double totalFlyTime, int flightStatus, int seatAvailableFirst, int seatAvailableBus, int seatAvailableEco, Double ticketPrice, String reasonCanceled) {
+        this.flightId = flightId;
+        this.airlineName = airlineName;
+        this.departureCode = departureCode;
+        this.arrivalCode = arrivalCode;
+        this.departureTime = departureTime;
+        this.arrivalTime = arrivalTime;
+        this.totalFlyTime = totalFlyTime;
+        this.flightStatus = flightStatus;
+        this.seatAvailableFirst = seatAvailableFirst;
+        this.seatAvailableBus = seatAvailableBus;
+        this.seatAvailableEco = seatAvailableEco;
+        this.ticketPrice = ticketPrice;
+        this.reasonCanceled = reasonCanceled;
+    }
+
+    public String getFlightId() {
         return flightId;
     }
 
-    public void setFlightId(int flightId) {
+    public void setFlightId(String flightId) {
         this.flightId = flightId;
     }
 
@@ -123,6 +140,15 @@ public class Flight {
     public void setSeatAvailableEco(int seatAvailableEco) {
         this.seatAvailableEco = seatAvailableEco;
     }
+
+    public double getTicketPrice() {
+        return ticketPrice;
+    }
+
+    public void setTicketPrice(double ticketPrice) {
+        this.ticketPrice = ticketPrice;
+    }
+    
 
     public String getReasonCanceled() {
         return reasonCanceled;
