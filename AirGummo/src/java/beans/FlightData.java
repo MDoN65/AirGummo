@@ -16,18 +16,19 @@ import javax.sql.DataSource;
 import javax.annotation.Resource;
 import javax.sql.rowset.CachedRowSet;
 import java.time.format.DateTimeFormatter;
+import java.sql.Date;
 
 /**
  *
  * @author Ryguy
  */
-public class FlighData {
+public class FlightData {
     private int flightId;
     private String airlineName;
     private String departureCode;
     private String arrivalCode;
-    private LocalDateTime departureTime;
-    private LocalDateTime arrivalTime;
+    private Date departureTime;
+    private Date arrivalTime;
     private Double totalFlyTime;
     private int flightStatus;
     private int seatAvailableFirst;
@@ -65,8 +66,10 @@ public class FlighData {
                 String airlineName = rowSet.getString(2);
                 String depCode = rowSet.getString(3);
                 String arrCode = rowSet.getString(4);
-                LocalDateTime depTime = LocalDateTime.parse(rowSet.getString(5), formatter);
-                LocalDateTime arrTime = LocalDateTime.parse(rowSet.getString(6), formatter);               
+                //LocalDateTime depTime = LocalDateTime.parse(rowSet.getString(5), formatter);
+                //LocalDateTime arrTime = LocalDateTime.parse(rowSet.getString(6), formatter);
+                Date depTime = rowSet.getDate(5);
+                Date arrTime = rowSet.getDate(6);
                 Double totalFlyTime =  rowSet.getDouble(7);
                 int flightStatus = rowSet.getInt(8);
                 int SAF = rowSet.getInt(9);
@@ -104,8 +107,8 @@ public class FlighData {
             insertFlight.setString(2, f.getAirlineName());
             insertFlight.setString(3, f.getDepartureCode());
             insertFlight.setString(4, f.getArrivalCode());
-            insertFlight.setString(5, f.getDepartureTime().format(formatter));
-            insertFlight.setString(6, f.getArrivalTime().format(formatter));
+            insertFlight.setDate(5, f.getDepartureTime());
+            insertFlight.setDate(6, f.getArrivalTime());
             insertFlight.setDouble(7, f.getTotalFlyTime());
             insertFlight.setInt(8, f.getFlightStatus());
             insertFlight.setInt(9, f.getSeatAvailableFirst());
@@ -144,8 +147,8 @@ public class FlighData {
             updateFlight.setString(2, f.getAirlineName());
             updateFlight.setString(3, f.getDepartureCode());
             updateFlight.setString(4, f.getArrivalCode());
-            updateFlight.setString(5, f.getDepartureTime().format(formatter));
-            updateFlight.setString(6, f.getArrivalTime().format(formatter));
+            updateFlight.setDate(5, f.getDepartureTime());
+            updateFlight.setDate(6, f.getArrivalTime());
             updateFlight.setDouble(7, f.getTotalFlyTime());
             updateFlight.setInt(8, f.getFlightStatus());
             updateFlight.setInt(9, f.getSeatAvailableFirst());
@@ -194,19 +197,19 @@ public class FlighData {
         this.arrivalCode = arrivalCode;
     }
 
-    public LocalDateTime getDepartureTime() {
+    public Date getDepartureTime() {
         return departureTime;
     }
 
-    public void setDepartureTime(LocalDateTime departureTime) {
+    public void setDepartureTime(Date departureTime) {
         this.departureTime = departureTime;
     }
 
-    public LocalDateTime getArrivalTime() {
+    public Date getArrivalTime() {
         return arrivalTime;
     }
 
-    public void setArrivalTime(LocalDateTime arrivalTime) {
+    public void setArrivalTime(Date arrivalTime) {
         this.arrivalTime = arrivalTime;
     }
 
