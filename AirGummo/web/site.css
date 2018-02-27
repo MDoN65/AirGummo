@@ -1,5 +1,6 @@
 body, html {
     height: 100%;
+    background-color: grey;
 }
 .bg { 
     /* The image used */
@@ -22,6 +23,14 @@ body, html {
 .center {
     text-align: center;
 }
+
+.left {
+    text-align: left;
+}
+
+.right{
+    text-align: right;
+}
 .indexHead {
     text-align: center;
     color: white;
@@ -41,7 +50,12 @@ body, html {
 }
 #content {
     width: 80%;
-    margin: auto;
-    background-color: white;
+    margin-top: 2%;
+    margin-bottom: auto;
+    margin-left: auto;
+    margin-right: auto;
     height: 100%;
+}
+.gap {
+    margin-bottom: 1%;
 }

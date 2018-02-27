@@ -8,9 +8,8 @@
     <h:head>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
         <link href="site.css" rel="stylesheet" type="text/css"></link>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <title>Air Gummo - Modify Flight</title>
+        <title>Air Gummo - Manage Flight</title>
     </h:head>
     <h:body>
         <ui:include src="includes/header.xhtml" />
@@ -22,23 +21,23 @@
                         <div class="card">
                             <img class="card-img-top smallIcon" src="images/iconAdd.png" alt="Add Flight"></img>
                             <div class="card-body">
-                                <h:button id="btnAdd" class="btn btn-primary" value="Add Flight" style="margin-top: 4%"></h:button>
+                                <h:button id="btnAdd" onclick="addFlightClick();" class="btn btn-primary" value="Add Flight" style="margin-top: 4%"></h:button>
                             </div>
                         </div>
                     </div>
                     <div class="col-xs-12 hidden-sm hidden-md hidden-lg hidden-xl center">
-                        <h:button id="btnAdd1" class="btn btn-primary" value="Add Flight" style="margin-top: 4%"></h:button>
+                        <h:button id="btnAdd1" onclick="addFlightClick();" class="btn btn-primary" value="Add Flight" style="margin-top: 4%"></h:button>
                     </div>
                     <div class="col-sm-4 hidden-xs center">
                         <div class="card">
                             <img class="card-img-top smallIcon" src="images/iconMod.png" alt="Modify Flight"></img>
                             <div class="card-body">
-                                <h:button id="btnMod" class="btn btn-primary" value="Modify Flight" style="margin-top: 4%"></h:button>
+                                <h:button id="btnMod" onclick="modFlightClick();" class="btn btn-primary" value="Modify Flight" style="margin-top: 4%"></h:button>
                             </div>
                         </div>
                     </div>
                     <div class="col-xs-12 hidden-sm hidden-md hidden-lg hidden-xl center">
-                        <h:button id="btnMod1" class="btn btn-primary" value="Modify Flight" style="margin-top: 4%"></h:button>
+                        <h:button id="btnMod1" onclick="modFlightClick();" class="btn btn-primary" value="Modify Flight" style="margin-top: 4%"></h:button>
                     </div>
                     <div class="col-sm-4 hidden-xs center">
                         <div class="card">
@@ -55,30 +54,190 @@
             </div>
         </div>
         <div id="content">
-            <h:form>
-                <p:panel id="projectLabel" header="Add Flight" style="margin-bottom:10px;">
-                <p:messages id="messages" />
-
-                <h:panelGrid columns="2">
-
-                    <h:outputLabel for="flightId" value="Flight Number:" class="ui-g-6" />
-                    <p:inputText id="flightId" value="#{addFlight.flightId}" label="flightId">
-                        <f:validateLength minimum="2" />
+            <div id="addFlight" class="invisible">
+                <h1>Add Flight</h1>
+            <h:form class="flightForm">  
+                <div class="row">
+                    <div class="col-sm-6 col-xs-12 form-group">
+                    <h:outputLabel for="flightId" value="Flight Number" />
+                    <p:inputText id="flightId" value="#{Flight.flightId}" label="flightId" styleClass="form-control">
+                        <f:validateLength minimum="7" />
                     </p:inputText>
                     <p:message for="flightId" />
                     <h:outputText value="" />
-
-                    <h:outputLabel for="airline" value="Airline Name:" />
-                    <p:inputText id="airline" value="#{addFlight.airline}"  label="airline"/>
+                    </div>
+                    <div class="col-sm-6 col-xs-12 form-group">
+                    <h:outputLabel for="airline" value="Airline Name" />
+                    <p:inputText id="airline" value="#{Flight.airlineName}"  label="airline" styleClass="form-control"/>
                     <p:message for="airline" />
                     <h:outputText value="" />
-
+                    </div>
+                    <div class="col-sm-6 col-xs-12 form-group">
+                    <h:outputLabel for="departCode" value="Departure Code" />
+                    <p:inputText id="departCode" value="#{Flight.departureCode}"  label="departCode" styleClass="form-control"/>
+                    <p:message for="departCode" />
+                    <h:outputText value="" />
+                    </div>
+                    <div class="col-sm-6 col-xs-12 form-group">
+                    <h:outputLabel for="arrivalCode" value="Arrival Code" />
+                    <p:inputText id="arrivalCode" value="#{Flight.arrivalCode}"  label="arrivalCode" styleClass="form-control"/>
+                    <p:message for="arrivalCode" />
+                    <h:outputText value="" />
+                    </div>
+                    <div class="col-sm-6 col-xs-12 form-group">
+                    <h:outputLabel for="departTime" value="Departure Time" />
+                    <p:calendar id="departTime" value="#{Flight.departureTime}" label="departTime" pattern="MM/dd/yyyy HH:mm" mode="inline"/>
+                    <p:message for="departTime" />
+                    <h:outputText value="" />
+                    </div>
+                    <div class="col-sm-6 col-xs-12 form-group">
+                    <h:outputLabel for="arrivalTime" value="Arrival Time" />
+                    <p:calendar id="arrivalTime" value="#{Flight.arrivalTime}" label="arrivalTime" pattern="MM/dd/yyyy HH:mm" mode="inline"/>
+                    <p:message for="arrivalTime" />
+                    <h:outputText value="" />
+                    </div>
+                    <div class="col-sm-6 col-xs-12 form-group">
+                    <h:outputLabel for="seatAvailableFirst" value="First Class Seats" />
+                    <br />
+                    <p:spinner id="seatAvailableFirst" value="#{Flight.seatAvailableFirst}" styleClass="from-control" min="0" max="30"/>
+                    <p:message for="seatAvailableFirst" />
+                    <h:outputText value="" />
+                    </div>
+                    <div class="col-sm-6 col-xs-12 form-group">
+                    <h:outputLabel for="seatAvailableBus" value="Business Class Seats" />
+                    <br />
+                    <p:spinner id="seatAvailableBus" value="#{Flight.seatAvailableBus}" styleClass="from-control" min="0" max="60"/>
+                    <p:message for="seatAvailableBus" />
+                    <h:outputText value="" />
+                    </div>
+                    <div class="col-sm-6 col-xs-12 form-group">
+                    <h:outputLabel for="seatAvailableEco" value="Ecoonomy Class Seats" />
+                    <br />
+                    <p:spinner id="seatAvailableEco" value="#{Flight.seatAvailableEco}" styleClass="from-control" min="0" max="300"/>
+                    <p:message for="seatAvailableEco" />
+                    <h:outputText value="" />
+                    </div>
+                    <div class="col-sm-6 col-xs-12 form-group">
+                    <h:outputLabel for="flightStatus" value="Flight Status" />
+                    <br />
+                    <p:selectOneMenu value="#{Flight.flightStatus}" label="flightStatus">
+                        <f:selectItem itemValue="select" itemLabel="---Select Flight Status---"></f:selectItem>
+                        <f:selectItem itemValue="open" itemLabel="Open"></f:selectItem>
+                        <f:selectItem itemValue="inTransit" itemLabel="In Transit"></f:selectItem>
+                        <f:selectItem itemValue="delayed" itemLabel="Delayed"></f:selectItem>
+                        <f:selectItem itemValue="completed" itemLabel="Completed"></f:selectItem>
+                        <f:selectItem itemValue="cancelled" itemLabel="Cancelled"></f:selectItem>
+                    </p:selectOneMenu>
+                    </div>
                     <center>
-                        <p:commandButton ajax="false" value="Add Flight" icon="ui-icon-disk" action="#{saveData.save}" />
+                    <p:commandButton ajax="false" value="Add Flight" icon="fa-plus" action="#{Flight.addFlight}" />
                     </center>
-                </h:panelGrid>
-            </p:panel>
-            </h:form>
+                </div>                
+            </h:form> 
+            </div>
+            <div id="modFlight" class="visible">
+                <h1>Modify Flight</h1>
+            <h:form class="flightForm">  
+                <div class="row">
+                    <div class="col-sm-6 col-xs-12 form-group">
+                    <h:outputLabel for="searchFlight" value="Search Flight By Flight Number" />
+                    <p:inputText id="searchFlight" value="#{Flight.searchFlight}" label="searchFlight" styleClass="form-control">
+                        <f:validateLength minimum="7" />
+                    </p:inputText>
+                    <p:message for="searchFlight" />
+                    <h:outputText value="" />
+                    </div>
+                    <div class="col-sm-6 col-xs-12 form-group">
+                        <h:outputLabel for="searchFlight1" value=" " />
+                        <p:commandButton ajax="false" id="searchFlight1" value="Search Flight" icon="fa-plus" action="#{Flight.updateFlight1}" />
+                    </div>
+                    <div class="col-sm-6 col-xs-12 form-group">
+                    <h:outputLabel for="flightId" value="Flight Number" />
+                    <p:inputText id="flightId" value="#{Flight.flightId}" label="flightId" styleClass="form-control">
+                        <f:validateLength minimum="7" />
+                    </p:inputText>
+                    <p:message for="flightId" />
+                    <h:outputText value="" />
+                    </div>
+                    <div class="col-sm-6 col-xs-12 form-group">
+                    <h:outputLabel for="airline" value="Airline Name" />
+                    <p:inputText id="airline" value="#{Flight.airlineName}"  label="airline" styleClass="form-control"/>
+                    <p:message for="airline" />
+                    <h:outputText value="" />
+                    </div>
+                    <div class="col-sm-6 col-xs-12 form-group">
+                    <h:outputLabel for="departCode" value="Departure Code" />
+                    <p:inputText id="departCode" value="#{Flight.departureCode}"  label="departCode" styleClass="form-control"/>
+                    <p:message for="departCode" />
+                    <h:outputText value="" />
+                    </div>
+                    <div class="col-sm-6 col-xs-12 form-group">
+                    <h:outputLabel for="arrivalCode" value="Arrival Code" />
+                    <p:inputText id="arrivalCode" value="#{Flight.arrivalCode}"  label="arrivalCode" styleClass="form-control"/>
+                    <p:message for="arrivalCode" />
+                    <h:outputText value="" />
+                    </div>
+                    <div class="col-sm-6 col-xs-12 form-group">
+                    <h:outputLabel for="departTime" value="Departure Time" />
+                    <p:calendar id="departTime" value="#{Flight.departureTime}" label="departTime" pattern="MM/dd/yyyy HH:mm" mode="inline"/>
+                    <p:message for="departTime" />
+                    <h:outputText value="" />
+                    </div>
+                    <div class="col-sm-6 col-xs-12 form-group">
+                    <h:outputLabel for="arrivalTime" value="Arrival Time" />
+                    <p:calendar id="arrivalTime" value="#{Flight.arrivalTime}" label="arrivalTime" pattern="MM/dd/yyyy HH:mm" mode="inline"/>
+                    <p:message for="arrivalTime" />
+                    <h:outputText value="" />
+                    </div>
+                    <div class="col-sm-6 col-xs-12 form-group">
+                    <h:outputLabel for="seatAvailableFirst" value="First Class Seats" />
+                    <br />
+                    <p:spinner id="seatAvailableFirst" value="#{Flight.seatAvailableFirst}" styleClass="from-control" min="0" max="30"/>
+                    <p:message for="seatAvailableFirst" />
+                    <h:outputText value="" />
+                    </div>
+                    <div class="col-sm-6 col-xs-12 form-group">
+                    <h:outputLabel for="seatAvailableBus" value="Business Class Seats" />
+                    <br />
+                    <p:spinner id="seatAvailableBus" value="#{Flight.seatAvailableBus}" styleClass="from-control" min="0" max="60"/>
+                    <p:message for="seatAvailableBus" />
+                    <h:outputText value="" />
+                    </div>
+                    <div class="col-sm-6 col-xs-12 form-group">
+                    <h:outputLabel for="seatAvailableEco" value="Ecoonomy Class Seats" />
+                    <br />
+                    <p:spinner id="seatAvailableEco" value="#{Flight.seatAvailableEco}" styleClass="from-control" min="0" max="300"/>
+                    <p:message for="seatAvailableEco" />
+                    <h:outputText value="" />
+                    </div>
+                    <div class="col-sm-6 col-xs-12 form-group">
+                    <h:outputLabel for="flightStatus" value="Flight Status" />
+                    <br />
+                    <p:selectOneMenu value="#{Flight.flightStatus}" label="flightStatus">
+                        <f:selectItem itemValue="select" itemLabel="---Select Flight Status---"></f:selectItem>
+                        <f:selectItem itemValue="open" itemLabel="Open"></f:selectItem>
+                        <f:selectItem itemValue="inTransit" itemLabel="In Transit"></f:selectItem>
+                        <f:selectItem itemValue="delayed" itemLabel="Delayed"></f:selectItem>
+                        <f:selectItem itemValue="completed" itemLabel="Completed"></f:selectItem>
+                        <f:selectItem itemValue="cancelled" itemLabel="Cancelled"></f:selectItem>
+                    </p:selectOneMenu>
+                    </div>
+                    <center>
+                    <p:commandButton ajax="false" value="Update Flight" icon="fa-plus" action="#{Flight.updateFlight}" />
+                    </center>
+                </div>                
+            </h:form> 
+            </div>
         </div>
+        <script>
+            function addFlightClick() {
+                document.getElementById("addFlight").className = "visible";
+                document.getElementById("modFlight").className = "invisible";
+            }
+            function modFlightClick() {
+                document.getElementById("addFlight").className = "invisible";
+                document.getElementById("modFlight").className = "visible";
+            }
+            </script>
     </h:body>
 </html>
