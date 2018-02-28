@@ -5,8 +5,7 @@
  */
 package beans;
 
-import java.sql.Date;
-import java.time.LocalDateTime;
+import java.util.Date;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 

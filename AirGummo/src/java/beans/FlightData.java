@@ -9,19 +9,22 @@ import com.sun.rowset.CachedRowSetImpl;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import javax.sql.DataSource;
 import javax.annotation.Resource;
 import javax.sql.rowset.CachedRowSet;
 import java.time.format.DateTimeFormatter;
 import java.sql.Date;
+import java.sql.Timestamp;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 
 /**
  *
  * @author Ryguy
  */
+@ManagedBean
+@RequestScoped
 public class FlightData {
     private int flightId;
     private String airlineName;
@@ -40,6 +43,10 @@ public class FlightData {
     
     @Resource(name = "jdbc/_default")
     DataSource dataSource;
+    
+    public FlightData() {
+        
+    }
     
     private ArrayList<Flight> flights = new ArrayList();
     
@@ -87,6 +94,15 @@ public class FlightData {
         return flights;
     }
     
+    public Timestamp getTimestamp(java.util.Date date){ 
+        return date == null ? null : new java.sql.Timestamp(date.getTime());
+    }
+
+    private static java.sql.Date convertUtilToSql(java.util.Date uDate) {
+        java.sql.Date sDate = new java.sql.Date(uDate.getTime());
+        return sDate;
+    }
+    
     public void addFlight(Flight f) throws SQLException {
         if (dataSource == null) {
             throw new SQLException("Unable to obtain DataSource");
@@ -101,20 +117,25 @@ public class FlightData {
             
             PreparedStatement insertFlight = connection.prepareStatement(
                             "insert into flight(flightId, airlineName, departureCode, arrivalCode, departureTime, arrivalTime, "
-                            + "totalFlyTime, flightStatus, seatAvailableFirst, seatAvailableBus, seatAvailableEco, ticketPrice)"
-                            + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                            + "flightStatus, seatAvailableFirst, seatAvailableBus, seatAvailableEco)"
+                            + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             insertFlight.setString(1, f.getFlightId());
             insertFlight.setString(2, f.getAirlineName());
             insertFlight.setString(3, f.getDepartureCode());
             insertFlight.setString(4, f.getArrivalCode());
-            insertFlight.setDate(5, f.getDepartureTime());
-            insertFlight.setDate(6, f.getArrivalTime());
-            insertFlight.setDouble(7, f.getTotalFlyTime());
-            insertFlight.setInt(8, f.getFlightStatus());
-            insertFlight.setInt(9, f.getSeatAvailableFirst());
-            insertFlight.setInt(10, f.getSeatAvailableBus());
-            insertFlight.setInt(11, f.getSeatAvailableEco());
-            insertFlight.setDouble(12, f.getTicketPrice());
+            
+            java.sql.Date sqlDateDept = convertUtilToSql(f.getDepartureTime());
+            java.sql.Date sqlDateArr = convertUtilToSql(f.getArrivalTime());
+            
+            insertFlight.setDate(5, sqlDateDept);
+            insertFlight.setDate(6, sqlDateArr);
+            //test
+            //insertFlight.setDouble(7, f.getTotalFlyTime());
+            insertFlight.setInt(7, f.getFlightStatus());
+            insertFlight.setInt(8, f.getSeatAvailableFirst());
+            insertFlight.setInt(9, f.getSeatAvailableBus());
+            insertFlight.setInt(10, f.getSeatAvailableEco());
+            //insertFlight.setDouble(12, f.getTicketPrice());
             
             int done = insertFlight.executeUpdate();
             
@@ -147,8 +168,8 @@ public class FlightData {
             updateFlight.setString(2, f.getAirlineName());
             updateFlight.setString(3, f.getDepartureCode());
             updateFlight.setString(4, f.getArrivalCode());
-            updateFlight.setDate(5, f.getDepartureTime());
-            updateFlight.setDate(6, f.getArrivalTime());
+            //updateFlight.setDate(5, f.getDepartureTime());
+            //updateFlight.setDate(6, f.getArrivalTime());
             updateFlight.setDouble(7, f.getTotalFlyTime());
             updateFlight.setInt(8, f.getFlightStatus());
             updateFlight.setInt(9, f.getSeatAvailableFirst());
