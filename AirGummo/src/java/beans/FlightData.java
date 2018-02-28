@@ -64,23 +64,20 @@ public class FlightData {
         
         try {
             PreparedStatement getFlight = connection.prepareStatement(
-                    "SELECT flightId, airlineName, departureCode, arrivalCode, departureTime, arrivalTime, totalFlyTime, flightStatus"
+                    "SELECT flightId, airlineName, departureCode, arrivalCode, departureTime, arrivalTime, flightTime, flightStatus,"
                             + "seatAvailableFirst, seatAvailableBus, seatAvailableEco, ticketPrice FROM flight "
                             + "WHERE flightId = ?");
             getFlight.setString(1, fId);
             CachedRowSet rowSet = new CachedRowSetImpl();
             rowSet.populate(getFlight.executeQuery());
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
             while (rowSet.next()) {
                 String fid = rowSet.getString(1);
                 String airlineName = rowSet.getString(2);
                 String depCode = rowSet.getString(3);
                 String arrCode = rowSet.getString(4);
-                //LocalDateTime depTime = LocalDateTime.parse(rowSet.getString(5), formatter);
-                //LocalDateTime arrTime = LocalDateTime.parse(rowSet.getString(6), formatter);
                 Date depTime = rowSet.getDate(5);
                 Date arrTime = rowSet.getDate(6);
-                Double totalFlyTime =  rowSet.getDouble(7);
+                Time totalFlyTime =  rowSet.getTime(7);
                 int flightStatus = rowSet.getInt(8);
                 int SAF = rowSet.getInt(9);
                 int SAB = rowSet.getInt(10);
@@ -165,7 +162,7 @@ public class FlightData {
             updateFlight.setString(4, f.getArrivalCode());
             //updateFlight.setDate(5, f.getDepartureTime());
             //updateFlight.setDate(6, f.getArrivalTime());
-            updateFlight.setDouble(7, f.getTotalFlyTime());
+            //updateFlight.setDouble(7, f.getTotalFlyTime());
             updateFlight.setInt(8, f.getFlightStatus());
             updateFlight.setInt(9, f.getSeatAvailableFirst());
             updateFlight.setInt(10, f.getSeatAvailableBus());
@@ -269,7 +266,7 @@ public class FlightData {
             updateFlight.setString(4, f.getArrivalCode());
 //            updateFlight.setDate(5, f.getDepartureTime());
 //            updateFlight.setDate(6, f.getArrivalTime());
-            updateFlight.setDouble(7, f.getTotalFlyTime());
+            //updateFlight.setDouble(7, f.getTotalFlyTime());
             updateFlight.setInt(8, f.getFlightStatus());
             updateFlight.setInt(9, f.getSeatAvailableFirst());
             updateFlight.setInt(10, f.getSeatAvailableBus());

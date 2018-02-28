@@ -5,6 +5,7 @@
  */
 package beans;
 
+import java.sql.Time;
 import java.util.Date;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -29,7 +30,7 @@ public class Flight {
     private String arrivalCode;
     private Date departureTime;
     private Date arrivalTime;
-    private Double totalFlyTime;
+    private Time totalFlyTime;
     private int flightStatus;
     private int seatAvailableFirst;
     private int seatAvailableBus;
@@ -37,7 +38,7 @@ public class Flight {
     private double ticketPrice;
     private String reasonCanceled;
 
-    public Flight(String flightId, String airlineName, String departureCode, String arrivalCode, Date departureTime, Date arrivalTime, Double totalFlyTime, int flightStatus, int seatAvailableFirst, int seatAvailableBus, int seatAvailableEco, Double ticketPrice, String reasonCanceled) {
+    public Flight(String flightId, String airlineName, String departureCode, String arrivalCode, Date departureTime, Date arrivalTime, Time totalFlyTime, int flightStatus, int seatAvailableFirst, int seatAvailableBus, int seatAvailableEco, Double ticketPrice, String reasonCanceled) {
         this.flightId = flightId;
         this.airlineName = airlineName;
         this.departureCode = departureCode;
@@ -101,11 +102,11 @@ public class Flight {
         this.arrivalTime = arrivalTime;
     }
 
-    public Double getTotalFlyTime() {
+    public Time getTotalFlyTime() {
         return totalFlyTime;
     }
 
-    public void setTotalFlyTime(Double totalFlyTime) {
+    public void setTotalFlyTime(Time totalFlyTime) {
         this.totalFlyTime = totalFlyTime;
     }
 
