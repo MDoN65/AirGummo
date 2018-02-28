@@ -164,6 +164,110 @@ public class FlightData {
             connection.close();
         }
     }
+    
+    public void deleteFlight(Flight f) throws SQLException {
+        if (dataSource == null) {
+            throw new SQLException("Unable to obtain DataSource");
+        }
+        Connection connection = dataSource.getConnection();
+        if (dataSource == null) {
+            throw new SQLException("Unable to connect to DataSource");
+        }
+        
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            
+            PreparedStatement deleteFlight = connection.prepareStatement(
+                            "DELETE FROM flight WHERE flightId = ?");
+            deleteFlight.setString(1, f.getFlightId());
+            int done = deleteFlight.executeUpdate();
+            
+            flights.clear();
+        } finally {
+            connection.close();
+        }
+    }
+    
+        public void cancelFlight(Flight f) throws SQLException {
+        if (dataSource == null) {
+            throw new SQLException("Unable to obtain DataSource");
+        }
+        Connection connection = dataSource.getConnection();
+        if (dataSource == null) {
+            throw new SQLException("Unable to connect to DataSource");
+        }
+        
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            
+            PreparedStatement cancelFlight = connection.prepareStatement(
+                            "UPDATE flight SET flightStatus = 0, reasonCanceled = ? WHERE flightId = ?");
+            cancelFlight.setString(1, f.getReasonCanceled());
+            cancelFlight.setString(2, f.getFlightId());
+
+            int done = cancelFlight.executeUpdate();          
+            flights.clear();
+        } finally {
+            connection.close();
+        }
+    }
+        
+    public void selectFlights(Flight f) throws SQLException {
+        if (dataSource == null) {
+            throw new SQLException("Unable to obtain DataSource");
+        }
+        Connection connection = dataSource.getConnection();
+        if (dataSource == null) {
+            throw new SQLException("Unable to connect to DataSource");
+        }
+        
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            
+            PreparedStatement updateFlight = connection.prepareStatement(
+                            "IF tClass = 1" +
+                                "THEN" +
+                                "SELECT flightId, departureCode, arrivalCode, totalFlyTime, ticketPrice AS 'TicketPrice' FROM flight " +
+                                "WHERE departureCode = depCode" +
+                                "AND arrivalCode = arrCode" +
+                                "AND (departureTime BETWEEN beginTime AND endTime)" +
+                                "AND seatAvailableEco >= seatCount;" +
+                            "ELSEIF tClass = 2" +
+                                "THEN " +
+                                "SELECT flightId, departureCode, arrivalCode, totalFlyTime, ticketPrice * 1.1 AS 'TicketPrice' FROM flight " +
+                                "WHERE departureCode = depCode" +
+                                "AND arrivalCode = arrCode" +
+                                "AND (departureTime BETWEEN beginTime AND endTime)" +
+                                "AND seatAvailableBus >= seatCount;" +
+                            "ELSEIF tClass = 3" +
+                                "THEN " +
+                                "SELECT flightId, departureCode, arrivalCode, totalFlyTime, ticketPrice * 1.25 AS 'TicketPrice' FROM flight " +
+                                "WHERE departureCode = depCode" +
+                                "AND arrivalCode = arrCode" +
+                                "AND (departureTime BETWEEN beginTime AND endTime)" +
+                                "AND seatAvailableFirst >= seatCount;" +
+                            "END IF");
+            updateFlight.setString(1, f.getFlightId());
+            updateFlight.setString(2, f.getAirlineName());
+            updateFlight.setString(3, f.getDepartureCode());
+            updateFlight.setString(4, f.getArrivalCode());
+            updateFlight.setDate(5, f.getDepartureTime());
+            updateFlight.setDate(6, f.getArrivalTime());
+            updateFlight.setDouble(7, f.getTotalFlyTime());
+            updateFlight.setInt(8, f.getFlightStatus());
+            updateFlight.setInt(9, f.getSeatAvailableFirst());
+            updateFlight.setInt(10, f.getSeatAvailableBus());
+            updateFlight.setInt(11, f.getSeatAvailableEco());
+            updateFlight.setDouble(12, f.getTicketPrice());
+            updateFlight.setString(13, f.getFlightId());
+            
+            int done = updateFlight.executeUpdate();
+            
+            flights.clear();
+        } finally {
+            connection.close();
+        }
+    }
 
     public int getFlightId() {
         return flightId;
