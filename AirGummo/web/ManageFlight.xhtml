@@ -21,42 +21,42 @@
                         <div class="card">
                             <img class="card-img-top smallIcon" src="images/iconAdd.png" alt="Add Flight"></img>
                             <div class="card-body">
-                                <h:button id="btnAdd" onclick="addFlightClick();" class="btn btn-primary" value="Add Flight" style="margin-top: 4%"></h:button>
+                                <p class="btn btn-primary" style="margin-top: 4%" onclick="addFlightClick();">Add Flight</p>
                             </div>
                         </div>
                     </div>
                     <div class="col-xs-12 hidden-sm hidden-md hidden-lg hidden-xl center">
-                        <h:button id="btnAdd1" onclick="addFlightClick();" class="btn btn-primary" value="Add Flight" style="margin-top: 4%"></h:button>
+                        <p class="btn btn-primary" style="margin-top: 4%" onclick="addFlightClick();">Add Flight</p>
                     </div>
                     <div class="col-sm-4 hidden-xs center">
                         <div class="card">
                             <img class="card-img-top smallIcon" src="images/iconMod.png" alt="Modify Flight"></img>
                             <div class="card-body">
-                                <h:button id="btnMod" onclick="modFlightClick();" class="btn btn-primary" value="Modify Flight" style="margin-top: 4%"></h:button>
+                                <p class="btn btn-primary" style="margin-top: 4%" onclick="modFlightClick();">Modify Flight</p>
                             </div>
                         </div>
                     </div>
                     <div class="col-xs-12 hidden-sm hidden-md hidden-lg hidden-xl center">
-                        <h:button id="btnMod1" onclick="modFlightClick();" class="btn btn-primary" value="Modify Flight" style="margin-top: 4%"></h:button>
+                        <p class="btn btn-primary" style="margin-top: 4%" onclick="modFlightClick();">Modify Flight</p>
                     </div>
                     <div class="col-sm-4 hidden-xs center">
                         <div class="card">
                         <img class="card-img-top smallIcon" src="images/iconDelete.png" alt="Delete Flight"></img>
                             <div class="card-body">
-                                <h:button id="btnDel" class="btn btn-primary" value="Delete Flight" style="margin-top: 4%"></h:button>
+                                <p class="btn btn-primary" style="margin-top: 4%" onclick="delFlightClick();">Delete Flight</p>
                             </div>
                         </div>
                     </div>
                     <div class="col-xs-12 hidden-sm hidden-md hidden-lg hidden-xl center">
-                        <h:button id="btnDel1" class="btn btn-primary" value="Delete Flight" style="margin-top: 4%"></h:button>
+                        <p class="btn btn-primary" style="margin-top: 4%" onclick="delFlightClick();">Delete Flight</p>
                     </div>
                 </div>
             </div>
         </div>
         <div id="content">
-            <div id="addFlight" class="visible">
+            <div id="addFlight" style="display: none;">
                 <h1>Add Flight</h1>
-            <h:form class="flightForm">  
+            <h:form class="addFlightForm">  
                 <div class="row">
                     <div class="col-sm-6 col-xs-12 form-group">
                     <h:outputLabel for="flightId" value="Flight Number" />
@@ -131,15 +131,22 @@
                         <f:selectItem itemValue="5" itemLabel="Cancelled"></f:selectItem>
                     </p:selectOneMenu>
                     </div>
+                    <div class="col-sm-6 col-xs-12 form-group">
+                    <h:outputLabel for="ticketPrice" value="Ticket Price" />
+                    <br />
+                    <p:spinner id="ticketPrice" value="#{flight.ticketPrice}" styleClass="from-control" prefix="$" min="0" max="10000"/>
+                    <p:message for="ticketPrice" />
+                    <h:outputText value="" />
+                    </div>
+                    </div> 
                     <center>
                     <p:commandButton ajax="false" value="Add Flight" icon="fa-plus" action="#{flightData.addFlight(flight)}" />
-                    </center>
-                </div>                
+                    </center>       
             </h:form> 
             </div>
-            <div id="modFlight" class="invisible">
+            <div id="modFlight" style="display: none;">
                 <h1>Modify Flight</h1>
-            <h:form class="flightForm">  
+            <h:form class="modFlightForm">  
                 <div class="row">
                     <div class="col-sm-6 col-xs-12 form-group">
                     <h:outputLabel for="searchFlight" value="Search Flight By Flight Number" />
@@ -149,12 +156,14 @@
                     </div>
                     <div class="col-sm-6 col-xs-12 form-group">
                         <h:outputLabel for="searchFlight1" value=" " />
-                        <p:commandButton ajax="false" id="searchFlight1" value="Search Flight" icon="fa-plus" action="#{flight.searchFlight}" />
+                        <p:commandButton ajax="false" id="searchFlight1" value="Search Flight" action="#{flightData.getFlightById(flight.flightId)}" />
                     </div>
+                </div>
+                <div class="row">
                     <div class="col-sm-6 col-xs-12 form-group">
                     <h:outputLabel for="flightId" value="Flight Number" />
                     <p:inputText id="flightId" value="#{flight.flightId}" label="flightId" styleClass="form-control">
-                        <f:validateLength minimum="7" />
+                        <f:validateLength minimum="7" maximum="7" />
                     </p:inputText>
                     <p:message for="flightId" />
                     <h:outputText value="" />
@@ -179,13 +188,15 @@
                     </div>
                     <div class="col-sm-6 col-xs-12 form-group">
                     <h:outputLabel for="departTime" value="Departure Time" />
-                    <p:calendar id="departTime" value="#{flight.departureTime}" label="departTime" pattern="MM/dd/yyyy HH:mm" mode="inline"/>
+                    <br />
+                    <p:calendar id="departTime" value="#{flight.departureTime}" label="departTime" pattern="MM/dd/yyyy HH:mm"/>
                     <p:message for="departTime" />
                     <h:outputText value="" />
                     </div>
                     <div class="col-sm-6 col-xs-12 form-group">
                     <h:outputLabel for="arrivalTime" value="Arrival Time" />
-                    <p:calendar id="arrivalTime" value="#{flight.arrivalTime}" label="arrivalTime" pattern="MM/dd/yyyy HH:mm" mode="inline"/>
+                    <br />
+                    <p:calendar id="arrivalTime" value="#{flight.arrivalTime}" label="arrivalTime" pattern="MM/dd/yyyy HH:mm"/>
                     <p:message for="arrivalTime" />
                     <h:outputText value="" />
                     </div>
@@ -214,29 +225,36 @@
                     <h:outputLabel for="flightStatus" value="Flight Status" />
                     <br />
                     <p:selectOneMenu value="#{flight.flightStatus}" label="flightStatus">
-                        <f:selectItem itemValue="select" itemLabel="---Select Flight Status---"></f:selectItem>
-                        <f:selectItem itemValue="open" itemLabel="Open"></f:selectItem>
-                        <f:selectItem itemValue="inTransit" itemLabel="In Transit"></f:selectItem>
-                        <f:selectItem itemValue="delayed" itemLabel="Delayed"></f:selectItem>
-                        <f:selectItem itemValue="completed" itemLabel="Completed"></f:selectItem>
-                        <f:selectItem itemValue="cancelled" itemLabel="Cancelled"></f:selectItem>
+                        <f:selectItem itemValue="0" itemLabel="---Select Flight Status---"></f:selectItem>
+                        <f:selectItem itemValue="1" itemLabel="Open"></f:selectItem>
+                        <f:selectItem itemValue="2" itemLabel="In Transit"></f:selectItem>
+                        <f:selectItem itemValue="3" itemLabel="Delayed"></f:selectItem>
+                        <f:selectItem itemValue="4" itemLabel="Completed"></f:selectItem>
+                        <f:selectItem itemValue="5" itemLabel="Cancelled"></f:selectItem>
                     </p:selectOneMenu>
                     </div>
+                    <div class="col-sm-6 col-xs-12 form-group">
+                    <h:outputLabel for="ticketPrice" value="Ticket Price" />
+                    <br />
+                    <p:spinner id="ticketPrice" value="#{flight.ticketPrice}" styleClass="from-control" prefix="$" min="0" max="10000"/>
+                    <p:message for="ticketPrice" />
+                    <h:outputText value="" />
+                    </div>
                     <center>
-                    <p:commandButton ajax="false" value="Update Flight" icon="fa-plus" action="#{flight.updateFlight}" />
+                    <p:commandButton ajax="false" value="Update Flight" icon="fa-plus" action="#{flightData.editFlight(f)}" />
                     </center>
                 </div>                
             </h:form> 
             </div>
         </div>
-        <script>
+        <script>            
             function addFlightClick() {
-                document.getElementById("addFlight").className = "visible";
-                document.getElementById("modFlight").className = "invisible";
+                document.getElementById("addFlight").style.display = "block";
+                document.getElementById("modFlight").style.display = "none";
             }
             function modFlightClick() {
-                document.getElementById("addFlight").className = "invisible";
-                document.getElementById("modFlight").className = "visible";
+                document.getElementById("addFlight").style.display = "none";
+                document.getElementById("modFlight").style.display = "block";
             }
             </script>
     </h:body>
