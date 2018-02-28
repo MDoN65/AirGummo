@@ -131,10 +131,17 @@
                         <f:selectItem itemValue="5" itemLabel="Cancelled"></f:selectItem>
                     </p:selectOneMenu>
                     </div>
+                    <div class="col-sm-6 col-xs-12 form-group">
+                    <h:outputLabel for="ticketPrice" value="Ticket Price" />
+                    <br />
+                    <p:spinner id="ticketPrice" value="#{flight.ticketPrice}" styleClass="from-control" prefix="$" min="0" max="10000"/>
+                    <p:message for="ticketPrice" />
+                    <h:outputText value="" />
+                    </div>
+                    </div> 
                     <center>
                     <p:commandButton ajax="false" value="Add Flight" icon="fa-plus" action="#{flightData.addFlight(flight)}" />
-                    </center>
-                </div>                
+                    </center>       
             </h:form> 
             </div>
             <div id="modFlight" class="invisible">

@@ -32,11 +32,12 @@ public class FlightData {
     private String arrivalCode;
     private Date departureTime;
     private Date arrivalTime;
-    private Double totalFlyTime;
+    private Timestamp totalFlyTime;
     private int flightStatus;
     private int seatAvailableFirst;
     private int seatAvailableBus;
     private int seatAvailableEco;
+    private double ticketPrice;
     private String reasonCanceled;
     
     private boolean isRendered = false;
@@ -94,15 +95,6 @@ public class FlightData {
         return flights;
     }
     
-    public Timestamp getTimestamp(java.util.Date date){ 
-        return date == null ? null : new java.sql.Timestamp(date.getTime());
-    }
-
-    private static java.sql.Date convertUtilToSql(java.util.Date uDate) {
-        java.sql.Date sDate = new java.sql.Date(uDate.getTime());
-        return sDate;
-    }
-    
     public void addFlight(Flight f) throws SQLException {
         if (dataSource == null) {
             throw new SQLException("Unable to obtain DataSource");
@@ -113,12 +105,10 @@ public class FlightData {
         }
         
         try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-            
             PreparedStatement insertFlight = connection.prepareStatement(
                             "insert into flight(flightId, airlineName, departureCode, arrivalCode, departureTime, arrivalTime, "
                             + "flightStatus, seatAvailableFirst, seatAvailableBus, seatAvailableEco, ticketPrice)"
-                            + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                            + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             insertFlight.setString(1, f.getFlightId());
             insertFlight.setString(2, f.getAirlineName());
             insertFlight.setString(3, f.getDepartureCode());
@@ -336,11 +326,11 @@ public class FlightData {
         this.arrivalTime = arrivalTime;
     }
 
-    public Double getTotalFlyTime() {
+    public Timestamp getTotalFlyTime() {
         return totalFlyTime;
     }
 
-    public void setTotalFlyTime(Double totalFlyTime) {
+    public void setTotalFlyTime(Timestamp totalFlyTime) {
         this.totalFlyTime = totalFlyTime;
     }
 
@@ -374,6 +364,14 @@ public class FlightData {
 
     public void setSeatAvailableEco(int seatAvailableEco) {
         this.seatAvailableEco = seatAvailableEco;
+    }
+    
+    public double getTicketPrice() {
+        return ticketPrice;
+    }
+
+    public void setTicketPrice(double ticketPrice) {
+        this.ticketPrice = ticketPrice;
     }
 
     public String getReasonCanceled() {
