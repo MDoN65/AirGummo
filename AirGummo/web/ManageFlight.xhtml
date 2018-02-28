@@ -160,6 +160,7 @@
                     </div>
                 </div>
                 <div class="row">
+                    <p:dataGrid value="#{flightData.flights}" var="ff"  
                     <div class="col-sm-6 col-xs-12 form-group">
                     <h:outputLabel for="flightId" value="Flight Number" />
                     <p:inputText id="flightId" value="#{flight.flightId}" label="flightId" styleClass="form-control">
@@ -240,6 +241,7 @@
                     <p:message for="ticketPrice" />
                     <h:outputText value="" />
                     </div>
+                    </p:dataGrid>
                     </div>
                     <center>
                     <p:commandButton ajax="false" value="Update Flight" action="#{flightData.editFlight(f)}" />
