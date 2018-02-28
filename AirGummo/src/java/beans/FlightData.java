@@ -117,7 +117,7 @@ public class FlightData {
             
             PreparedStatement insertFlight = connection.prepareStatement(
                             "insert into flight(flightId, airlineName, departureCode, arrivalCode, departureTime, arrivalTime, "
-                            + "flightStatus, seatAvailableFirst, seatAvailableBus, seatAvailableEco)"
+                            + "flightStatus, seatAvailableFirst, seatAvailableBus, seatAvailableEco, ticketPrice)"
                             + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             insertFlight.setString(1, f.getFlightId());
             insertFlight.setString(2, f.getAirlineName());
@@ -129,13 +129,11 @@ public class FlightData {
             
             insertFlight.setTimestamp(5, sqlDateDept);
             insertFlight.setTimestamp(6, sqlDateArr);
-            //test
-            //insertFlight.setDouble(7, f.getTotalFlyTime());
             insertFlight.setInt(7, f.getFlightStatus());
             insertFlight.setInt(8, f.getSeatAvailableFirst());
             insertFlight.setInt(9, f.getSeatAvailableBus());
             insertFlight.setInt(10, f.getSeatAvailableEco());
-            //insertFlight.setDouble(12, f.getTicketPrice());
+            insertFlight.setDouble(11, f.getTicketPrice());
             
             int done = insertFlight.executeUpdate();
             
