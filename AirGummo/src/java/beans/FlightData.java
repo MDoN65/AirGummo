@@ -125,10 +125,10 @@ public class FlightData {
             insertFlight.setString(4, f.getArrivalCode());
             
             java.sql.Timestamp sqlDateDept = new java.sql.Timestamp(f.getDepartureTime().getTime());
-            java.sql.Date sqlDateArr = convertUtilToSql(f.getArrivalTime());
+            java.sql.Timestamp sqlDateArr = new java.sql.Timestamp(f.getArrivalTime().getTime());
             
             insertFlight.setTimestamp(5, sqlDateDept);
-            insertFlight.setDate(6, sqlDateArr);
+            insertFlight.setTimestamp(6, sqlDateArr);
             //test
             //insertFlight.setDouble(7, f.getTotalFlyTime());
             insertFlight.setInt(7, f.getFlightStatus());
@@ -272,8 +272,8 @@ public class FlightData {
             updateFlight.setString(2, f.getAirlineName());
             updateFlight.setString(3, f.getDepartureCode());
             updateFlight.setString(4, f.getArrivalCode());
-            updateFlight.setDate(5, f.getDepartureTime());
-            updateFlight.setDate(6, f.getArrivalTime());
+//            updateFlight.setDate(5, f.getDepartureTime());
+//            updateFlight.setDate(6, f.getArrivalTime());
             updateFlight.setDouble(7, f.getTotalFlyTime());
             updateFlight.setInt(8, f.getFlightStatus());
             updateFlight.setInt(9, f.getSeatAvailableFirst());
