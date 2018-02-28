@@ -147,28 +147,31 @@ public class FlightData {
             throw new SQLException("Unable to connect to DataSource");
         }
         
-        try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-            
+        try {            
             PreparedStatement updateFlight = connection.prepareStatement(
-                            "UPDATE flight SET flightId = ?, airlineName = ?, departureCode = ?, arrivalCode = ?"
+                            "UPDATE flight airlineName = ?, departureCode = ?, arrivalCode = ?"
                                     + " departureTime = ?, arrivalTime = ?, "
-                                    + "totalFlyTime = ?, flightStatus = ?, seatAvailableFirst = ?, seatAvailableBus = ?, "
+                                    + "flightTime = ?, flightStatus = ?, seatAvailableFirst = ?, seatAvailableBus = ?, "
                                     + "seatAvailableEco = ?, ticketPrice = tPrice"
                                     + " WHERE flightId = ?");
-            updateFlight.setString(1, f.getFlightId());
-            updateFlight.setString(2, f.getAirlineName());
-            updateFlight.setString(3, f.getDepartureCode());
-            updateFlight.setString(4, f.getArrivalCode());
-            //updateFlight.setDate(5, f.getDepartureTime());
-            //updateFlight.setDate(6, f.getArrivalTime());
-            //updateFlight.setDouble(7, f.getTotalFlyTime());
-            updateFlight.setInt(8, f.getFlightStatus());
-            updateFlight.setInt(9, f.getSeatAvailableFirst());
-            updateFlight.setInt(10, f.getSeatAvailableBus());
-            updateFlight.setInt(11, f.getSeatAvailableEco());
-            updateFlight.setDouble(12, f.getTicketPrice());
-            updateFlight.setString(13, f.getFlightId());
+            updateFlight.setString(1, f.getAirlineName());
+            updateFlight.setString(2, f.getDepartureCode());
+            updateFlight.setString(3, f.getArrivalCode());
+            
+            java.sql.Timestamp sqlDateDept = new java.sql.Timestamp(f.getDepartureTime().getTime());
+            java.sql.Timestamp sqlDateArr = new java.sql.Timestamp(f.getArrivalTime().getTime());
+            
+            long duration  = f.getArrivalTime().getTime() - f.getDepartureTime().getTime();           
+            Time flyTime = new Time(duration);
+            
+            updateFlight.setTimestamp(4, sqlDateDept);
+            updateFlight.setTimestamp(5, sqlDateArr);
+            updateFlight.setTime(6, flyTime);
+            updateFlight.setInt(7, f.getFlightStatus());
+            updateFlight.setInt(8, f.getSeatAvailableFirst());
+            updateFlight.setInt(9, f.getSeatAvailableBus());
+            updateFlight.setInt(10, f.getSeatAvailableEco());
+            updateFlight.setDouble(11, f.getTicketPrice());
             
             int done = updateFlight.executeUpdate();
             

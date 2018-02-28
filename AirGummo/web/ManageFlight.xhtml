@@ -159,8 +159,9 @@
                         <p:commandButton ajax="false" id="searchFlight1" style="margin-top: 25px;" value="Search Flight" action="#{flightData.getFlightById(flight.flightId)}" />
                     </div>
                 </div>
+                <p:dataList value="#{flightData.flights}" var="ff">
                 <div class="row">
-                    <p:dataGrid value="#{flightData.flights}" var="ff">
+                    
                     <div class="col-sm-6 col-xs-12 form-group">
                     <h:outputLabel for="flightId" value="Flight Number" />
                     <p:inputText id="flightId" value="#{ff.flightId}" label="flightId" styleClass="form-control">
@@ -241,11 +242,12 @@
                     <p:message for="ticketPrice" />
                     <h:outputText value="" />
                     </div>
-                        </p:dataGrid>
+                    
                     </div>
                     <center>
-                    <p:commandButton ajax="false" value="Update Flight" action="#{flightData.editFlight(f)}" />
-                    </center>               
+                        <p:commandButton ajax="false" value="Update Flight" action="#{flightData.editFlight(ff)}" />
+                    </center>
+                </p:dataGrid>
             </h:form> 
             </div>
         </div>
@@ -258,6 +260,6 @@
                 document.getElementById("addFlight").style.display = "none";
                 document.getElementById("modFlight").style.display = "block";
             }
-            </script>
+        </script>
     </h:body>
 </html>
