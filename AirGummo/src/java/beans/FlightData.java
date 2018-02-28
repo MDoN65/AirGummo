@@ -15,7 +15,9 @@ import javax.annotation.Resource;
 import javax.sql.rowset.CachedRowSet;
 import java.time.format.DateTimeFormatter;
 import java.sql.Date;
+import java.sql.Time;
 import java.sql.Timestamp;
+import java.util.concurrent.TimeUnit;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
@@ -107,8 +109,8 @@ public class FlightData {
         try {
             PreparedStatement insertFlight = connection.prepareStatement(
                             "insert into flight(flightId, airlineName, departureCode, arrivalCode, departureTime, arrivalTime, "
-                            + "flightStatus, seatAvailableFirst, seatAvailableBus, seatAvailableEco, ticketPrice)"
-                            + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                            + "flightStatus, seatAvailableFirst, seatAvailableBus, seatAvailableEco, ticketPrice, flightTime)"
+                            + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             insertFlight.setString(1, f.getFlightId());
             insertFlight.setString(2, f.getAirlineName());
             insertFlight.setString(3, f.getDepartureCode());
@@ -117,6 +119,10 @@ public class FlightData {
             java.sql.Timestamp sqlDateDept = new java.sql.Timestamp(f.getDepartureTime().getTime());
             java.sql.Timestamp sqlDateArr = new java.sql.Timestamp(f.getArrivalTime().getTime());
             
+            long duration  = f.getArrivalTime().getTime() - f.getDepartureTime().getTime();           
+            Time flyTime = new Time(duration);
+            
+            
             insertFlight.setTimestamp(5, sqlDateDept);
             insertFlight.setTimestamp(6, sqlDateArr);
             insertFlight.setInt(7, f.getFlightStatus());
@@ -124,6 +130,7 @@ public class FlightData {
             insertFlight.setInt(9, f.getSeatAvailableBus());
             insertFlight.setInt(10, f.getSeatAvailableEco());
             insertFlight.setDouble(11, f.getTicketPrice());
+            insertFlight.setTime(12, flyTime);
             
             int done = insertFlight.executeUpdate();
             
