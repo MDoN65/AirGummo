@@ -41,7 +41,7 @@ public class FlightData {
     
     private boolean isRendered = false;
     
-    @Resource(name = "jdbc/_default")
+    @Resource(name = "jdbc/__default")
     DataSource dataSource;
     
     public FlightData() {
@@ -124,10 +124,10 @@ public class FlightData {
             insertFlight.setString(3, f.getDepartureCode());
             insertFlight.setString(4, f.getArrivalCode());
             
-            java.sql.Date sqlDateDept = convertUtilToSql(f.getDepartureTime());
+            java.sql.Timestamp sqlDateDept = new java.sql.Timestamp(f.getDepartureTime().getTime());
             java.sql.Date sqlDateArr = convertUtilToSql(f.getArrivalTime());
             
-            insertFlight.setDate(5, sqlDateDept);
+            insertFlight.setTimestamp(5, sqlDateDept);
             insertFlight.setDate(6, sqlDateArr);
             //test
             //insertFlight.setDouble(7, f.getTotalFlyTime());
