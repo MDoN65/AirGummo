@@ -129,7 +129,7 @@ public class FlightData {
             
             insertFlight.setDate(5, sqlDateDept);
             insertFlight.setDate(6, sqlDateArr);
-            
+            //test
             //insertFlight.setDouble(7, f.getTotalFlyTime());
             insertFlight.setInt(7, f.getFlightStatus());
             insertFlight.setInt(8, f.getSeatAvailableFirst());
