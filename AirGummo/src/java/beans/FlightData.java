@@ -127,8 +127,6 @@ public class FlightData {
             java.sql.Timestamp sqlDateDept = new java.sql.Timestamp(f.getDepartureTime().getTime());
             java.sql.Timestamp sqlDateArr = new java.sql.Timestamp(f.getArrivalTime().getTime());
             
-            
-            
             insertFlight.setTimestamp(5, sqlDateDept);
             insertFlight.setTimestamp(6, sqlDateArr);
             insertFlight.setInt(7, f.getFlightStatus());
