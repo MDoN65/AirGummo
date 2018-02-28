@@ -34,7 +34,7 @@ public class FlightData {
     private String arrivalCode;
     private Date departureTime;
     private Date arrivalTime;
-    private Timestamp totalFlyTime;
+    private Time totalFlyTime;
     private int flightStatus;
     private int seatAvailableFirst;
     private int seatAvailableBus;
@@ -330,11 +330,11 @@ public class FlightData {
         this.arrivalTime = arrivalTime;
     }
 
-    public Timestamp getTotalFlyTime() {
+    public Time getTotalFlyTime() {
         return totalFlyTime;
     }
 
-    public void setTotalFlyTime(Timestamp totalFlyTime) {
+    public void setTotalFlyTime(Time totalFlyTime) {
         this.totalFlyTime = totalFlyTime;
     }
 
