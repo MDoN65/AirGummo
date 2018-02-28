@@ -281,7 +281,9 @@ public class FlightData {
             connection.close();
         }
     }
-
+    public ArrayList getFlights() {
+        return flights;
+    }
     public int getFlightId() {
         return flightId;
     }
