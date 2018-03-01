@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
         <link href="site.css" rel="stylesheet" type="text/css"></link>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <title>Air Gummo - Add Flight</title>
+        <title>Air Gummo - Cancel Flight</title>
     </h:head>
     <h:body>
         <ui:include src="includes/header.xhtml" />
@@ -43,7 +43,7 @@
                         <div class="card">
                             <img class="card-img-top smallIcon" src="images/iconDelete.png" alt="Cancel Flight"></img>
                             <div class="card-body">
-                                <p class="btn btn-primary" style="margin-top: 4%"><a href="cancelFlight.xhtml" style="color: white">Cancel Flight</a></p>
+                                <p class="btn btn-primary" style="margin-top: 4%"><a href="cancellight.xhtml" style="color: white">Cancel Flight</a></p>
                             </div>
                         </div>
                     </div>
@@ -54,9 +54,23 @@
             </div>
         </div>
         <div id="content">
-            <div id="addFlight">
-                <h1>Add Flight</h1>
-            <h:form class="addFlightForm">  
+        <div id="canFlight">
+                <h1>Cancel Flight</h1>
+            <h:form class="modFlightForm">  
+                <div class="row">
+                    
+                    <div class="col-sm-6 col-xs-12 form-group">
+                    <h:outputLabel for="searchFlight" value="Search Flight By Flight Number" />
+                    <p:inputText id="searchFlight" value="#{flight.flightId}" label="searchFlight" styleClass="form-control">
+                        <f:validateLength minimum="7" />
+                    </p:inputText>
+                    </div>
+                    <div class="col-sm-6 col-xs-12 form-group">
+                        <h:outputLabel for="searchFlight1" value="" />
+                        <p:commandButton ajax="false" id="searchFlight1" style="margin-top: 25px;" value="Search Flight" action="#{flightData.getFlightById(flight.flightId)}" />
+                    </div>
+                </div>
+                <p:dataList value="#{flightData.flights}" var="ff" rendered="true">
                 <div class="row">
                     <div class="col-xs-12 center">
                     <p:message for="flightId" />
@@ -75,66 +89,59 @@
                     </div>
                     <div class="col-sm-6 col-xs-12 form-group">
                     <h:outputLabel for="flightId" value="Flight Number" />
-                    <p:inputText id="flightId" value="#{flight.flightId}" required="true" label="flightId" styleClass="form-control">
-                        <f:validateLength minimum="7" maximum="7" />
-                    </p:inputText>
+                    <p:inputText id="flightId" value="#{ff.flightId}" readonly="true" label="flightId" styleClass="form-control" />
                     </div>
                     <div class="col-sm-6 col-xs-12 form-group">
                     <h:outputLabel for="airline" value="Airline Name" />
-                    <p:inputText id="airline" value="#{flight.airlineName}" required="true" label="airline" styleClass="form-control"/>
-                    
+                    <p:inputText id="airline" value="#{ff.airlineName}" readonly="true" required="true" label="airline" styleClass="form-control"/>
                     </div>
                     <div class="col-sm-6 col-xs-12 form-group">
                     <h:outputLabel for="departCode" value="Departure Code" />
-                    <p:inputText id="departCode" value="#{flight.departureCode}" required="true" label="departCode" styleClass="form-control">
+                    <p:inputText id="departCode" value="#{ff.departureCode}" readonly="true" required="true" label="departCode" styleClass="form-control">
                         <f:validateLength minimum="3" maximum="3" />
                     </p:inputText>
-                    
                     </div>
                     <div class="col-sm-6 col-xs-12 form-group">
                     <h:outputLabel for="arrivalCode" value="Arrival Code" />
-                    <p:inputText id="arrivalCode" value="#{flight.arrivalCode}" required="true" label="arrivalCode" styleClass="form-control">
+                    <p:inputText id="arrivalCode" value="#{ff.arrivalCode}" readonly="true" required="true" label="arrivalCode" styleClass="form-control">
                         <f:validateLength minimum="3" maximum="3" />
                     </p:inputText>
-                    
                     </div>
                     <div class="col-sm-6 col-xs-12 form-group">
                     <h:outputLabel for="departTime" value="Departure Time" />
                     <br />
-                    <p:calendar id="departTime" value="#{flight.departureTime}" required="true" label="departTime" pattern="MM/dd/yyyy HH:mm"/>
-                    
+                    <p:calendar id="departTime" value="#{ff.departureTime}" showOn="true" readonly="true" required="true" label="departTime" pattern="MM/dd/yyyy HH:mm"/>
                     </div>
                     <div class="col-sm-6 col-xs-12 form-group">
                     <h:outputLabel for="arrivalTime" value="Arrival Time" />
                     <br />
-                    <p:calendar id="arrivalTime" value="#{flight.arrivalTime}" required="true" label="arrivalTime" pattern="MM/dd/yyyy HH:mm"/>
-                    
+                    <p:calendar id="arrivalTime" value="#{ff.arrivalTime}" showOn="true" readonly="true" required="true" label="arrivalTime" pattern="MM/dd/yyyy HH:mm"/>
                     </div>
                     <div class="col-sm-6 col-xs-12 form-group">
                     <h:outputLabel for="seatAvailableFirst" value="First Class Seats" />
                     <br />
-                    <p:spinner id="seatAvailableFirst" value="#{flight.seatAvailableFirst}" styleClass="from-control" min="0" max="30"/>
+                    <p:spinner id="seatAvailableFirst" value="#{ff.seatAvailableFirst}" readonly="true" styleClass="from-control" min="0" max="30"/>
                     <p:message for="seatAvailableFirst" />
                     <h:outputText value="" />
                     </div>
                     <div class="col-sm-6 col-xs-12 form-group">
                     <h:outputLabel for="seatAvailableBus" value="Business Class Seats" />
                     <br />
-                    <p:spinner id="seatAvailableBus" value="#{flight.seatAvailableBus}" styleClass="from-control" min="0" max="60"/>
+                    <p:spinner id="seatAvailableBus" value="#{ff.seatAvailableBus}" readonly="true" styleClass="from-control" min="0" max="60"/>
                     <p:message for="seatAvailableBus" />
                     <h:outputText value="" />
                     </div>
                     <div class="col-sm-6 col-xs-12 form-group">
                     <h:outputLabel for="seatAvailableEco" value="Economy Class Seats" />
                     <br />
-                    <p:spinner id="seatAvailableEco" value="#{flight.seatAvailableEco}" styleClass="from-control" min="0" max="300"/>
+                    <p:spinner id="seatAvailableEco" value="#{ff.seatAvailableEco}" readonly="true" styleClass="from-control" min="0" max="300"/>
                     <p:message for="seatAvailableEco" />
                     <h:outputText value="" />
                     </div>
                     <div class="col-sm-6 col-xs-12 form-group">
                     <h:outputLabel for="flightStatus" value="Flight Status" />
                     <br />
-                    <p:selectOneMenu value="#{flight.flightStatus}" label="flightStatus">
+                    <p:selectOneMenu value="#{ff.flightStatus}" styleClass="norm" disabled="true" label="flightStatus">
                         <f:selectItem itemValue="1" itemLabel="Open"></f:selectItem>
                         <f:selectItem itemValue="2" itemLabel="In Transit"></f:selectItem>
                         <f:selectItem itemValue="3" itemLabel="Delayed"></f:selectItem>
@@ -145,14 +152,17 @@
                     <div class="col-sm-6 col-xs-12 form-group">
                     <h:outputLabel for="ticketPrice" value="Ticket Price" />
                     <br />
-                    <p:spinner id="ticketPrice" value="#{flight.ticketPrice}" styleClass="from-control" prefix="$" min="0" max="10000"/>
+                    <p:spinner id="ticketPrice" readonly="true" value="#{ff.ticketPrice}" styleClass="from-control" prefix="$" min="0" max="10000"/>
                     <p:message for="ticketPrice" />
                     <h:outputText value="" />
                     </div>
-                    </div> 
-                    <center>
-                    <p:commandButton ajax="false" value="Add Flight" icon="fa-plus" action="#{flightData.addFlight(flight)}" />
-                    </center>       
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 center">
+                            <h:commandButton id="canFlight1" value="Cancel Flight" action="#{flightData.cancelFlight(ff)}"/>
+                        </div>
+                    </div>
+                </p:dataList>
             </h:form> 
             </div>
         </div>

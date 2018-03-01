@@ -61,6 +61,7 @@ public class FlightData {
     private ArrayList<Flight> flights = new ArrayList();
     
     public ArrayList<Flight> getFlightById(String fId) throws SQLException {
+        flights.clear();
         if(dataSource == null){
             throw new SQLException("Unable to obtain DataSource");
         }
