@@ -85,6 +85,8 @@
                     <h:outputText value="" />
                     <p:message for="arrivalTime" />
                     <h:outputText value="" />
+                    <p:message for="reasonCanceled" />
+                    <h:outputText value="" />
                     <br />
                     </div>
                     <div class="col-sm-6 col-xs-12 form-group">
@@ -155,6 +157,10 @@
                     <p:spinner id="ticketPrice" readonly="true" value="#{ff.ticketPrice}" styleClass="from-control" prefix="$" min="0" max="10000"/>
                     <p:message for="ticketPrice" />
                     <h:outputText value="" />
+                    </div>
+                    <div class="col-sm-6 col-xs-12 form-group">
+                    <h:outputLabel for="reasonCanceled" value="Reason Canceled" />
+                    <p:inputTextarea id="reasonCanceled" value="#{ff.reasonCanceled}" label="reasonCanceled" styleClass="form-control" />
                     </div>
                     </div>
                     <div class="row">

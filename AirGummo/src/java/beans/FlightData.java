@@ -19,9 +19,12 @@ import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.concurrent.TimeUnit;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -147,7 +150,7 @@ public class FlightData {
 
     }
     
-    public void editFlight(Flight f) throws SQLException {
+    public void editFlight(Flight f) throws SQLException, Exception {
         if (dataSource == null) {
             throw new SQLException("Unable to obtain DataSource");
         }
@@ -156,16 +159,16 @@ public class FlightData {
             throw new SQLException("Unable to connect to DataSource");
         }
         
-        try {            
+        try {
+            if (f.getFlightStatus() != 1) {
+            throw new Exception("Cannot update flight that is not open");
+        }
+            
             PreparedStatement updateFlight = connection.prepareStatement(
-                            "UPDATE flight SET airlineName = ?, departureCode = ?, arrivalCode = ?,"
-                                    + " departureTime = ?, arrivalTime = ?, "
-                                    + "flightTime = ?, flightStatus = ?, seatAvailableFirst = ?, seatAvailableBus = ?, "
+                            "UPDATE flight SET departureTime = ?, arrivalTime = ?, "
+                                    + "flightTime = ?, seatAvailableFirst = ?, seatAvailableBus = ?, "
                                     + "seatAvailableEco = ?, ticketPrice = ?"
                                     + " WHERE flightId = ?");
-            updateFlight.setString(1, f.getAirlineName());
-            updateFlight.setString(2, f.getDepartureCode());
-            updateFlight.setString(3, f.getArrivalCode());
             
             java.sql.Timestamp sqlDateDept = new java.sql.Timestamp(f.getDepartureTime().getTime());
             java.sql.Timestamp sqlDateArr = new java.sql.Timestamp(f.getArrivalTime().getTime());
@@ -175,18 +178,19 @@ public class FlightData {
             long durationMin = (duration / 1000 / 60) - (durationHour * 60) ;
             String time = String.format("%02d:%02d:%02d", durationHour, durationMin, 00);
             
-            updateFlight.setTimestamp(4, sqlDateDept);
-            updateFlight.setTimestamp(5, sqlDateArr);
-            updateFlight.setString(6, time);
-            updateFlight.setInt(7, f.getFlightStatus());
-            updateFlight.setInt(8, f.getSeatAvailableFirst());
-            updateFlight.setInt(9, f.getSeatAvailableBus());
-            updateFlight.setInt(10, f.getSeatAvailableEco());
-            updateFlight.setDouble(11, f.getTicketPrice());
-            updateFlight.setString(12, f.getFlightId());
+            updateFlight.setTimestamp(1, sqlDateDept);
+            updateFlight.setTimestamp(2, sqlDateArr);
+            updateFlight.setString(3, time);
+            updateFlight.setInt(4, f.getSeatAvailableFirst());
+            updateFlight.setInt(5, f.getSeatAvailableBus());
+            updateFlight.setInt(6, f.getSeatAvailableEco());
+            updateFlight.setDouble(7, f.getTicketPrice());
+            updateFlight.setString(8, f.getFlightId());
             
             int done = updateFlight.executeUpdate();            
             flights.clear();
+        } catch (Exception ex) {
+            
         } finally {
             connection.close();
         }
@@ -211,7 +215,7 @@ public class FlightData {
         }
     }
     
-        public void cancelFlight(Flight f) throws SQLException {
+        public void cancelFlight(Flight f) throws SQLException, Exception {
         if (dataSource == null) {
             throw new SQLException("Unable to obtain DataSource");
         }
@@ -221,15 +225,18 @@ public class FlightData {
         }
         
         try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            if (f.getFlightStatus() != 1) {
+            throw new Exception("Cannot cancel this flight because its flight status is not open");
+        }
             
-            PreparedStatement cancelFlight = connection.prepareStatement(
-                            "UPDATE flight SET flightStatus = 0, reasonCanceled = ? WHERE flightId = ?");
+            PreparedStatement cancelFlight = connection.prepareStatement("UPDATE flight SET flightStatus = 5, reasonCanceled = ? WHERE flightId = ?");
             cancelFlight.setString(1, f.getReasonCanceled());
             cancelFlight.setString(2, f.getFlightId());
 
             int done = cancelFlight.executeUpdate();          
             flights.clear();
+        } catch (Exception ex) {
+
         } finally {
             connection.close();
         }

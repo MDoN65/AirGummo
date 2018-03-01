@@ -93,17 +93,17 @@
                     </div>
                     <div class="col-sm-6 col-xs-12 form-group">
                     <h:outputLabel for="airline" value="Airline Name" />
-                    <p:inputText id="airline" value="#{ff.airlineName}" required="true" label="airline" styleClass="form-control"/>
+                    <p:inputText id="airline" value="#{ff.airlineName}" readonly="true" label="airline" styleClass="form-control"/>
                     </div>
                     <div class="col-sm-6 col-xs-12 form-group">
                     <h:outputLabel for="departCode" value="Departure Code" />
-                    <p:inputText id="departCode" value="#{ff.departureCode}" required="true" label="departCode" styleClass="form-control">
+                    <p:inputText id="departCode" value="#{ff.departureCode}" readonly="true" label="departCode" styleClass="form-control">
                         <f:validateLength minimum="3" maximum="3" />
                     </p:inputText>
                     </div>
                     <div class="col-sm-6 col-xs-12 form-group">
                     <h:outputLabel for="arrivalCode" value="Arrival Code" />
-                    <p:inputText id="arrivalCode" value="#{ff.arrivalCode}" required="true" label="arrivalCode" styleClass="form-control">
+                    <p:inputText id="arrivalCode" value="#{ff.arrivalCode}" readonly="true" label="arrivalCode" styleClass="form-control">
                         <f:validateLength minimum="3" maximum="3" />
                     </p:inputText>
                     </div>
