@@ -201,13 +201,9 @@ public class FlightData {
         }
         
         try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-            
-            PreparedStatement deleteFlight = connection.prepareStatement(
-                            "DELETE FROM flight WHERE flightId = ?");
+            PreparedStatement deleteFlight = connection.prepareStatement("DELETE FROM flight WHERE flightId = ?");
             deleteFlight.setString(1, f.getFlightId());
             int done = deleteFlight.executeUpdate();
-            
             flights.clear();
         } finally {
             connection.close();
