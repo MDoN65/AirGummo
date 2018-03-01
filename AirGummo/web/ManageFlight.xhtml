@@ -159,7 +159,7 @@
                         <p:commandButton ajax="false" id="searchFlight1" style="margin-top: 25px;" value="Search Flight" action="#{flightData.getFlightById(flight.flightId)}" />
                     </div>
                 </div>
-                <p:dataList value="#{flightData.flights}" var="ff">
+                <p:dataList value="#{flightData.flights}" var="ff" rendered="true">
                 <div class="row">
                     
                     <div class="col-sm-6 col-xs-12 form-group">
@@ -244,10 +244,10 @@
                     </div>
                     
                     </div>
-                    <center>
-                        <p:commandButton ajax="false" value="Update Flight" action="#{flightData.editFlight(ff)}" />
-                    </center>
-                </p:dataGrid>
+                    
+                    <h:commandButton id="editFlight1" value="Edit Flight" action="#{flightData.editFlight(ff)}"/>
+                    
+                </p:dataList>
             </h:form> 
             </div>
         </div>
