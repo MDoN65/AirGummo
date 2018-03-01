@@ -2,7 +2,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
         <link href="site.css" rel="stylesheet" type="text/css"></link>
@@ -16,6 +18,36 @@
             <br /><br /><br /><br />
             <p id="txtLg" class="strokeme">Air Gummo</p>
             <p id="txtMd" class="strokeme">Where Dreams Become Reality</p>
+        </div>
+        <div class="content">
+            <h:form>
+                <div class="row">
+                        <div class="col-sm-3 col-xs-6 form-group center">                        
+                            <h:outputLabel for="departureCode" value="From" />
+                            <br />
+                            <p:selectOneMenu value="#{flight.departureCode}" label="departureCode">
+                                <f:selectItem itemValue="YYC" itemLabel="Calgary"></f:selectItem>
+                                <f:selectItem itemValue="YHZ" itemLabel="Halifax"></f:selectItem>
+                                <f:selectItem itemValue="YQM" itemLabel="Moncton"></f:selectItem>
+                                <f:selectItem itemValue="YUL" itemLabel="Montreal"></f:selectItem>
+                                <f:selectItem itemValue="JFK" itemLabel="New York"></f:selectItem>
+                                <f:selectItem itemValue="YYZ" itemLabel="Toronto"></f:selectItem>
+                            </p:selectOneMenu>
+                        </div>
+                        <div class="col-sm-3 col-xs-6 form-group center">
+                            <h:outputLabel for="arrivalCode" value="To" />
+                            <br />
+                            <p:selectOneMenu value="#{flight.arrivalCode}" label="arrivalCode">
+                                <f:selectItem itemValue="YYC" itemLabel="Calgary"></f:selectItem>
+                                <f:selectItem itemValue="YHZ" itemLabel="Halifax"></f:selectItem>
+                                <f:selectItem itemValue="YQM" itemLabel="Moncton"></f:selectItem>
+                                <f:selectItem itemValue="YUL" itemLabel="Montreal"></f:selectItem>
+                                <f:selectItem itemValue="JFK" itemLabel="New York"></f:selectItem>
+                                <f:selectItem itemValue="YYZ" itemLabel="Toronto"></f:selectItem>
+                            </p:selectOneMenu>
+                        </div>
+                </div>
+            </h:form>
         </div>
     </h:body>
 </html>
