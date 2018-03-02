@@ -57,7 +57,7 @@
                     </center>  
                 </div>
                 <p:dataTable value="#{flightData.flights}" var="ff" rendered="true">
-                    <p:column headerText="Flight |ID">
+                    <p:column headerText="Flight Number">
                         <h:outputText value="#{ff.flightId}" />
                     </p:column>
                     <p:column headerText="Airline Name">
@@ -77,18 +77,6 @@
                     </p:column>                  
                     <p:column headerText="Total Fly Time">
                         <h:outputText value="#{ff.totalFlyTime}" />
-                    </p:column>
-                    <p:column headerText="Flight Status">
-                        <h:outputText value="#{ff.flightStatus}" />
-                    </p:column>
-                    <p:column headerText="Business Seats">
-                        <h:outputText value="#{ff.seatAvailableBus}" />
-                    </p:column>
-                    <p:column headerText="Economy Seats">
-                        <h:outputText value="#{ff.seatAvailableEco}" />
-                    </p:column>
-                    <p:column headerText="First Class Seats">
-                        <h:outputText value="#{ff.seatAvailableFirst}" />
                     </p:column>
                     <p:column headerText="Ticket Price">
                         <h:outputText value="#{ff.ticketPrice}" />
