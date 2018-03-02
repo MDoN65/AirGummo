@@ -242,7 +242,8 @@ public class FlightData {
         }
     }
         
-    public ArrayList<Flight> selectFlights(String departureCode, String arrivalCode, Date reservationDate) throws SQLException {
+    public ArrayList<Flight> selectFlights(Flight f) throws SQLException {
+        flights.clear();
         if (dataSource == null) {
             throw new SQLException("Unable to obtain DataSource");
         }
@@ -262,9 +263,12 @@ public class FlightData {
 "                AND (SELECT allianceCode FROM alliance INNER JOIN flight on flight.flightId = alliance.flightNumber " +
 "                WHERE alliance.flightNumber = (SELECT flight.flightId FROM flight where DATE(flight.departureTime)" +
 "                = ? AND alliance.stepNumber = 1)) ORDER BY alliance.stepNumber");
-            selectFlight.setString(1, departureCode);
-            selectFlight.setString(2, arrivalCode);
-            selectFlight.setDate(3, reservationDate);
+            selectFlight.setString(1, f.getDepartureCode());
+            selectFlight.setString(2, f.getArrivalCode());
+            
+            java.sql.Timestamp sqlDateDept = new java.sql.Timestamp(f.getDepartureTime().getTime());     
+            
+            selectFlight.setTimestamp(3, sqlDateDept);
             
             CachedRowSet rowSet = new CachedRowSetImpl();
             rowSet.populate(selectFlight.executeQuery());
@@ -281,8 +285,8 @@ public class FlightData {
                 int SAB = rowSet.getInt(10);
                 int SAE = rowSet.getInt(11);
                 Double ticketPrice = rowSet.getDouble(12);
-                Flight f = new Flight(fid, airlineName, depCode, arrCode, depTime, arrTime, totalFlyTime, flightStatus, SAF, SAB, SAE, ticketPrice, "");
-                flights.add(f);
+                Flight f1 = new Flight(fid, airlineName, depCode, arrCode, depTime, arrTime, totalFlyTime, flightStatus, SAF, SAB, SAE, ticketPrice, "");
+                flights.add(f1);
             }
         }  finally {
             connection.close();

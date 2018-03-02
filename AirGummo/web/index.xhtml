@@ -52,7 +52,48 @@
                     <p:calendar id="departTime" value="#{flight.departureTime}" required="true" label="departTime" pattern="MM/dd/yyyy"/>
                     </div>
                     </div>
+                    <center>
+                        <p:commandButton ajax="false" value="Select Flight" icon="fa-plus" action="#{flightData.selectFlights(flight)}" />
+                    </center>  
                 </div>
+                <p:dataTable value="#{flightData.flights}" var="ff" rendered="true">
+                    <p:column headerText="Flight |ID">
+                        <h:outputText value="#{ff.flightId}" />
+                    </p:column>
+                    <p:column headerText="Airline Name">
+                        <h:outputText value="#{ff.airlineName}" />
+                    </p:column>
+                    <p:column headerText="Arrival Code">
+                        <h:outputText value="#{ff.arrivalCode}" />
+                    </p:column>
+                    <p:column headerText="Departure Code">
+                        <h:outputText value="#{ff.departureCode}" />
+                    </p:column>
+                    <p:column headerText="Arrival Time">
+                        <h:outputText value="#{ff.arrivalTime}" />
+                    </p:column>
+                    <p:column headerText="Departure Time">
+                        <h:outputText value="#{ff.departureTime}" />
+                    </p:column>                  
+                    <p:column headerText="Total Fly Time">
+                        <h:outputText value="#{ff.totalFlyTime}" />
+                    </p:column>
+                    <p:column headerText="Flight Status">
+                        <h:outputText value="#{ff.flightStatus}" />
+                    </p:column>
+                    <p:column headerText="Business Seats">
+                        <h:outputText value="#{ff.seatAvailableBus}" />
+                    </p:column>
+                    <p:column headerText="Economy Seats">
+                        <h:outputText value="#{ff.seatAvailableEco}" />
+                    </p:column>
+                    <p:column headerText="First Class Seats">
+                        <h:outputText value="#{ff.seatAvailableFirst}" />
+                    </p:column>
+                    <p:column headerText="Ticket Price">
+                        <h:outputText value="#{ff.ticketPrice}" />
+                    </p:column>
+                </p:dataTable>
             </h:form>
         </div>
     </h:body>
