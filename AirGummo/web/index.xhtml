@@ -8,7 +8,6 @@
     <h:head>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
         <link href="site.css" rel="stylesheet" type="text/css"></link>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <title>Air Gummo</title>
     </h:head>
@@ -22,7 +21,8 @@
         <div class="content">
             <h:form>
                 <div class="row">
-                        <div class="col-sm-3 col-xs-6 form-group center">                        
+                    <div class="col-sm-8 center">
+                        <div class="col-sm-6 col-xs-12 form-group center">                        
                             <h:outputLabel for="departureCode" value="From" />
                             <br />
                             <p:selectOneMenu value="#{flight.departureCode}" label="departureCode">
@@ -34,7 +34,7 @@
                                 <f:selectItem itemValue="YYZ" itemLabel="Toronto"></f:selectItem>
                             </p:selectOneMenu>
                         </div>
-                        <div class="col-sm-3 col-xs-6 form-group center">
+                        <div class="col-sm-6 col-xs-12 form-group center">
                             <h:outputLabel for="arrivalCode" value="To" />
                             <br />
                             <p:selectOneMenu value="#{flight.arrivalCode}" label="arrivalCode">
@@ -46,6 +46,12 @@
                                 <f:selectItem itemValue="YYZ" itemLabel="Toronto"></f:selectItem>
                             </p:selectOneMenu>
                         </div>
+                    <div class="col-sm-6 col-xs-12 form-group center">
+                    <h:outputLabel for="departTime" value="Departure Time" />
+                    <br />
+                    <p:calendar id="departTime" value="#{flight.departureTime}" required="true" label="departTime" pattern="MM/dd/yyyy"/>
+                    </div>
+                    </div>
                 </div>
             </h:form>
         </div>
