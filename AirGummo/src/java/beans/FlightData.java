@@ -242,7 +242,7 @@ public class FlightData {
         }
     }
         
-    public void selectFlights(Flight f) throws SQLException {
+    public ArrayList<Flight> selectFlights(String departureCode, String arrivalCode, Date reservationDate) throws SQLException {
         if (dataSource == null) {
             throw new SQLException("Unable to obtain DataSource");
         }
@@ -251,52 +251,45 @@ public class FlightData {
             throw new SQLException("Unable to connect to DataSource");
         }
         
-        try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        try {         
+            PreparedStatement selectFlight = connection.prepareStatement(
+                 "SELECT * FROM flight INNER JOIN alliance on flight.flightId = alliance.flightNumber " +
+"                WHERE alliance.allianceCode = (SELECT allianceCode FROM alliance INNER " +
+"                JOIN flight on flight.flightId = alliance.flightNumber WHERE alliance.flightNumber = " +
+"               (SELECT flight.flightId FROM flight where flight.departureCode = ?)) AND " +
+"               (SELECT allianceCode FROM alliance INNER JOIN flight on flight.flightId = alliance.flightNumber " +
+"                WHERE alliance.flightNumber = (SELECT flight.flightId FROM flight where flight.arrivalCode = ?)) " +
+"                AND (SELECT allianceCode FROM alliance INNER JOIN flight on flight.flightId = alliance.flightNumber " +
+"                WHERE alliance.flightNumber = (SELECT flight.flightId FROM flight where DATE(flight.departureTime)" +
+"                = ? AND alliance.stepNumber = 1)) ORDER BY alliance.stepNumber");
+            selectFlight.setString(1, departureCode);
+            selectFlight.setString(2, arrivalCode);
+            selectFlight.setDate(3, reservationDate);
             
-            PreparedStatement updateFlight = connection.prepareStatement(
-                            "IF tClass = 1" +
-                                "THEN" +
-                                "SELECT flightId, departureCode, arrivalCode, totalFlyTime, ticketPrice AS 'TicketPrice' FROM flight " +
-                                "WHERE departureCode = depCode" +
-                                "AND arrivalCode = arrCode" +
-                                "AND (departureTime BETWEEN beginTime AND endTime)" +
-                                "AND seatAvailableEco >= seatCount;" +
-                            "ELSEIF tClass = 2" +
-                                "THEN " +
-                                "SELECT flightId, departureCode, arrivalCode, totalFlyTime, ticketPrice * 1.1 AS 'TicketPrice' FROM flight " +
-                                "WHERE departureCode = depCode" +
-                                "AND arrivalCode = arrCode" +
-                                "AND (departureTime BETWEEN beginTime AND endTime)" +
-                                "AND seatAvailableBus >= seatCount;" +
-                            "ELSEIF tClass = 3" +
-                                "THEN " +
-                                "SELECT flightId, departureCode, arrivalCode, totalFlyTime, ticketPrice * 1.25 AS 'TicketPrice' FROM flight " +
-                                "WHERE departureCode = depCode" +
-                                "AND arrivalCode = arrCode" +
-                                "AND (departureTime BETWEEN beginTime AND endTime)" +
-                                "AND seatAvailableFirst >= seatCount;" +
-                            "END IF");
-            updateFlight.setString(1, f.getFlightId());
-            updateFlight.setString(2, f.getAirlineName());
-            updateFlight.setString(3, f.getDepartureCode());
-            updateFlight.setString(4, f.getArrivalCode());
-//            updateFlight.setDate(5, f.getDepartureTime());
-//            updateFlight.setDate(6, f.getArrivalTime());
-            //updateFlight.setDouble(7, f.getTotalFlyTime());
-            updateFlight.setInt(8, f.getFlightStatus());
-            updateFlight.setInt(9, f.getSeatAvailableFirst());
-            updateFlight.setInt(10, f.getSeatAvailableBus());
-            updateFlight.setInt(11, f.getSeatAvailableEco());
-            updateFlight.setDouble(12, f.getTicketPrice());
-            updateFlight.setString(13, f.getFlightId());
-            
-            int done = updateFlight.executeUpdate();
-            
-            flights.clear();
-        } finally {
+            CachedRowSet rowSet = new CachedRowSetImpl();
+            rowSet.populate(selectFlight.executeQuery());
+            while (rowSet.next()) {
+                String fid = rowSet.getString(1);
+                String airlineName = rowSet.getString(2);
+                String depCode = rowSet.getString(3);
+                String arrCode = rowSet.getString(4);
+                Date depTime = rowSet.getDate(5);
+                Date arrTime = rowSet.getDate(6);
+                Time totalFlyTime =  rowSet.getTime(7);
+                int flightStatus = rowSet.getInt(8);
+                int SAF = rowSet.getInt(9);
+                int SAB = rowSet.getInt(10);
+                int SAE = rowSet.getInt(11);
+                Double ticketPrice = rowSet.getDouble(12);
+                Flight f = new Flight(fid, airlineName, depCode, arrCode, depTime, arrTime, totalFlyTime, flightStatus, SAF, SAB, SAE, ticketPrice, "");
+                flights.add(f);
+            }
+        }  finally {
             connection.close();
         }
+        
+        isRendered = true;
+        return flights;
     }
     public ArrayList getFlights() {
         return flights;
