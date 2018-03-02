@@ -251,7 +251,7 @@ public class FlightData {
         if (dataSource == null) {
             throw new SQLException("Unable to connect to DataSource");
         }
-        
+        ArrayList<Flight> alliance = new ArrayList<Flight>();
         try {         
             PreparedStatement selectFlight = connection.prepareStatement(
                  "SELECT * FROM flight INNER JOIN alliance on flight.flightId = alliance.flightNumber " +
@@ -262,7 +262,7 @@ public class FlightData {
 "                WHERE alliance.flightNumber = (SELECT flight.flightId FROM flight where flight.arrivalCode = ?)) " +
 "                AND (SELECT allianceCode FROM alliance INNER JOIN flight on flight.flightId = alliance.flightNumber " +
 "                WHERE alliance.flightNumber = (SELECT flight.flightId FROM flight where DATE(flight.departureTime)" +
-"                = ? AND alliance.stepNumber = 1)) ORDER BY alliance.stepNumber");
+"                = ?)) ORDER BY alliance.stepNumber");
             selectFlight.setString(1, f.getDepartureCode());
             selectFlight.setString(2, f.getArrivalCode());
             
@@ -272,6 +272,7 @@ public class FlightData {
             
             CachedRowSet rowSet = new CachedRowSetImpl();
             rowSet.populate(selectFlight.executeQuery());
+            
             while (rowSet.next()) {
                 String fid = rowSet.getString(1);
                 String airlineName = rowSet.getString(2);
@@ -286,10 +287,28 @@ public class FlightData {
                 int SAE = rowSet.getInt(11);
                 Double ticketPrice = rowSet.getDouble(12);
                 Flight f1 = new Flight(fid, airlineName, depCode, arrCode, depTime, arrTime, totalFlyTime, flightStatus, SAF, SAB, SAE, ticketPrice, "");
-                flights.add(f1);
+                alliance.add(f1);
             }
         }  finally {
             connection.close();
+        }
+        boolean endit = false;
+        for(Flight ff : alliance) {
+            if(!flights.isEmpty()) {              
+                if(!endit) {
+                    if(ff.getArrivalCode().equals(f.getArrivalCode())) {
+                        endit = true;
+                        flights.add(ff);
+                    } else {
+                        flights.add(ff);
+                    }
+                }
+            } else if(ff.getDepartureCode().equals(f.getDepartureCode()) && !ff.getArrivalCode().equals(f.getArrivalCode())) {
+                flights.add(ff);
+            } else if(ff.getDepartureCode().equals(f.getDepartureCode()) && ff.getArrivalCode().equals(f.getArrivalCode())) {
+                flights.add(ff);
+                endit = true;
+            }
         }
         
         isRendered = true;
